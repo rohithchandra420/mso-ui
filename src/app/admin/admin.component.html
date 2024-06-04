@@ -1,0 +1,46 @@
+<p>admin works!</p>
+
+<div class="container">
+    <div class="col-xs-12 col-sm-12 col-md-8 col-sm-offset-1 col-md-offset-2">
+        <form [formGroup]="addWorkshopForm" (ngSubmit)="onSubmit()">
+            <div class="form-group">
+                <label for="workshopName">Workshop Name:</label>
+                <input type="text" id="workshopName" formControlName="workshopName" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="workshopVenue">Venue:</label>
+                <input type="text" id="workshopVenue" formControlName="workshopVenue" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="startsAt">Starts At:</label>
+                <input type="text" id="startsAt" formControlName="startsAt" class="form-control">
+                <!-- <span *ngIf="registerForm.get('email').errors['required'] && registerForm.get('email').touched" class="help-block">*Information Required</span>
+                <span *ngIf="registerForm.get('email').errors['email']" class="help-block">Please enter a valid email</span> -->
+            </div>
+            <div class="form-group">
+                <label for="registrationTime">Registeration Starts At</label>
+                <input type="text" id="registrationTime" formControlName="registrationTime" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="workshopImage">Add Image: </label>
+                <input class="form-control" type="file" (change)="onChange($event)">
+            </div>
+            
+            <br>  
+            <button class="btn btn-primary" type="submit">Submit</button>
+            <button class="btn btn-primary" type="button" (click)="uploadWorkshopImage()">Upload Image</button>
+        </form>
+    </div>
+    <!-- <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-sm-offset-1 col-md-offset-2">
+            <ul class="list-group" *ngIf="ticketList.length >=1">
+                <li class="" *ngFor="let ticket of ticketList">
+                    <p>{{ ticket.name }}</p>
+                    <p>{{ ticket.email }}</p>
+
+                </li>
+
+            </ul>
+        </div>
+    </div> -->
+</div>
