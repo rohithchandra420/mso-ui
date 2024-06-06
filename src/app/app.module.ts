@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -22,9 +22,10 @@ import { AdminComponent } from './admin/admin.component';
 import { AuthInterceptorService } from './core/auth-interceptor.service';
 import { AlertComponent } from './alert/alert.component';
 
-
-
-
+import { register } from 'swiper/element/bundle';
+import { SwiperDirective } from './directives/swiper.directive';
+import { ShopComponent } from './shop/shop.component';
+register();
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { AlertComponent } from './alert/alert.component';
     RegistrationComponent,
     DashboardComponent,
     ErrorPageComponent,
-    AdminComponent
+    AdminComponent,
+    ShopComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,10 +49,11 @@ import { AlertComponent } from './alert/alert.component';
     ReactiveFormsModule,
     HttpClientModule,
     MatSnackBarModule,
-    MatCardModule
+    MatCardModule,
 
   ],
   providers: [AuthService, AuthGuard, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class AppModule { }

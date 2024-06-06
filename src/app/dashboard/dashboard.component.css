@@ -37,14 +37,14 @@ section{
 
 }
 
-.home .home-slider .swiper-slide{
+.home .home-slider swiper-slide{
     overflow: hidden;
     border-radius: .5rem;
     height: 50rem;
     width: 35rem;
 }
 
-.home .home-slider .swiper-slide img{
+.home .home-slider swiper-slide img{
     height: 100%;
     width: 100%;
     object-fit: cover;
@@ -57,10 +57,10 @@ section{
 }
 
 .service .box-container .box{
-    border-radius: .5rem;
+    /* border-radius: .5rem; */
     background: #040202 ;
     text-align: center;
-    padding: 2.5rem;
+    /* padding: 2.5rem; */
 }
 
 .service .box-container .box i{
@@ -326,3 +326,18 @@ section{
 .footer .credit span{
     color: var(--main-color);
 }
+
+
+/* ============================================================================================ */
+
+.carousel-item {
+    text-align: center;
+  }
+  
+  .testimonial {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 20px;
+  }
+  
