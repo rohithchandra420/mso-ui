@@ -1,1 +1,27 @@
-<p>shop works!</p>
+<p style="color:#fff">shop works!</p>
+
+<div class="row col-lg-12">
+    <div class="product-container col-lg-12">
+        <mat-card class="product-card" *ngFor="let product of productList">
+            <mat-card-header>
+                <div mat-card-avatar class="product-header-image"></div>
+                <mat-card-title>{{product.title}}</mat-card-title>
+                <mat-card-subtitle>Rs. 499</mat-card-subtitle>
+            </mat-card-header>
+            <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+                alt="Photo of a Shiba Inu"> -->
+            <mat-card-content>
+                <p>{{product.description}}</p>
+            </mat-card-content>
+            <mat-card-actions align="end">
+                <button mat-button>LIKE</button>
+                <div class="add-button-container">
+                    <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon">
+                      <mat-icon>plus_one</mat-icon>
+                    </button>
+                  </div>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+
+</div>

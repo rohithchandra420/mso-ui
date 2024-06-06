@@ -25,6 +25,8 @@ import { AlertComponent } from './alert/alert.component';
 import { register } from 'swiper/element/bundle';
 import { SwiperDirective } from './directives/swiper.directive';
 import { ShopComponent } from './shop/shop.component';
+import { ShopService } from './core/shop.service';
+import { MatButtonModule } from '@angular/material/button';
 register();
 
 @NgModule({
@@ -50,9 +52,15 @@ register();
     HttpClientModule,
     MatSnackBarModule,
     MatCardModule,
+    MatButtonModule
 
   ],
-  providers: [AuthService, AuthGuard, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true }],
+  providers: [
+    AuthService,
+    AuthGuard,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
+    ShopService
+  ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
