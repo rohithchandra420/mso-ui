@@ -47,9 +47,8 @@ export class AuthService {
         this.http.post<{user:User, token:string}>(this.tempUrl + "/createUsers", signUpDetails)
             .pipe(catchError(this.handleError), tap(resData => {
                     const user = new User(resData.user.id, 
-                        resData.user.name, resData.user.email, 
-                        resData.user.bookingId, resData.user.role, 
-                        resData.user.ticketId, resData.token);
+                        resData.user.name, resData.user.email,
+                        resData.user.role, resData.token);
                 }))
 
     }
@@ -57,10 +56,8 @@ export class AuthService {
     logIn(loginDetails) {
         this.http.post<{user:User, token:string}>(this.tempUrl + "/login", loginDetails)
             .pipe(catchError(this.handleError), tap(resData => {
-                this.handleAuthentication(resData.user.id, 
-                    resData.user.name, resData.user.email, 
-                    resData.user.bookingId, resData.user.role, 
-                    resData.user.ticketId, resData.token);
+                this.handleAuthentication(resData.user.id,
+                    resData.user.name, resData.user.email, resData.user.role, resData.token)
             }))
             .subscribe(response => {
                 console.log(response.user);
@@ -102,8 +99,7 @@ export class AuthService {
         }
 
         const loadedUser = new User( userData.id, userData.name, 
-            userData.email, userData.bookingId, userData.role, 
-            userData.ticketId, userData._token);
+            userData.email, userData.role, userData._token);
         if(loadedUser._token) {
             this.user.next(loadedUser);
         }
@@ -124,8 +120,8 @@ export class AuthService {
         }
     }
 
-    private handleAuthentication(id, name, email, bookingId, role, ticketId, token) {
-        const user = new User(id, name, email, bookingId, role, ticketId, token)
+    private handleAuthentication(id, name, email, role, token) {
+        const user = new User(id, name, email, role, token)
         this.user.next(user);
         localStorage.setItem('userData', JSON.stringify(user));
     }

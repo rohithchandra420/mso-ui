@@ -19,9 +19,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit() {
     this.user = {
       name: 'TestName',
-      bookingId: this.route.snapshot.params['id'],
       role: 'Admin',
-      ticketId: '',
       email: '',
       id: '',
       _token: ''

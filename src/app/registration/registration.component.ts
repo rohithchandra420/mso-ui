@@ -4,10 +4,10 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
-import { Ticket } from '../core/ticket.model';
 import { User } from '../core/user.model';
 
 import { RegistrationService } from './registration.service'
+import { Product } from '../core/product.model';
 
 @Component({
   selector: 'app-registration',
@@ -19,7 +19,7 @@ export class RegistrationComponent implements OnInit {
 
   registerForm: FormGroup;
   genders = ['male', 'female'];
-  ticketList: Ticket[] = [];
+  productList: Product[] = [];
   userList: User[] = [];
   
 
@@ -27,13 +27,17 @@ export class RegistrationComponent implements OnInit {
 
   constructor(private http: HttpClient, private registrationService: RegistrationService) {}
 
+  
   ngOnInit() {
     this.registerForm = new FormGroup({
       'userName': new FormControl(null, Validators.required),
-      'bookingId': new FormControl(null, [Validators.required]),
-      'email': new FormControl(null, [Validators.required, Validators.email]),
+      'description': new FormControl(null, [Validators.required]),
+      'price': new FormControl(null, [Validators.required]),
       'noOfTickets': new FormControl(null, [Validators.required, this.ticketValidator])
     });
+
+    this.getAllProducts();
+
   }
 
   ticketValidator(control: FormControl): {[s: string]:boolean} {
@@ -50,34 +54,29 @@ export class RegistrationComponent implements OnInit {
     // console.log(this.registerForm.controls.email.value);
     // console.log(this.registerForm.controls.noOfTickets.value);
     
-    let ticketDetails: Ticket = {
+    let productDetails: Product = {
       name: this.registerForm.controls.userName.value,
-      email: this.registerForm.controls.email.value,
-      bookingId: this.registerForm.controls.bookingId.value,
-      noOfTickets: this.registerForm.controls.noOfTickets.value
+      price: this.registerForm.controls.price.value,
+      description: this.registerForm.controls.description.value,
+      active: false,
+      remainingCount: this.registerForm.controls.noOfTickets.value,
     };
     //this.initTest() ;
 
-    // this.registrationService.registerTicket(ticketDetails)
-    //   .subscribe(response => {
-    //     this.userList = response;      
-    //     console.log("response: ", response);
-    //     console.log("userList: ", this.userList);
-    // }, error => {
-    //     console.log("Error: ", error);
-    // });
-
-    this.registrationService.getTicketsById("655efa7628adfb1804ffc7e0")
-      .subscribe(res => {
-        console.log(res);
-      })
+    this.registrationService.addProduct(productDetails)
+      .subscribe(response => {
+        //this.userList = response;      
+         console.log("response: ", response);
+         this.getAllProducts();
+        // console.log("userList: ", this.userList);
+    }, error => {
+        console.log("Error: ", error);
+    });
   }
 
-
-
-  initTest() {
+  getAllProducts() {
     this.http
-      .get<[Ticket]>("http://localhost:3000/getAllTicketDetails")
+      .get<[Product]>("http://localhost:3000/getAllProducts")
       .pipe(map(responseData => {
         const postsArray = [];
         for(const key in responseData) {
@@ -92,9 +91,25 @@ export class RegistrationComponent implements OnInit {
       }))
       .subscribe(response => {
         console.log(response);
-        this.ticketList = response;
+        this.productList = response;
       });
   }
+
+  getProductById(id) {
+    this.registrationService.getProductById(id)
+      .subscribe(res => {
+        console.log("ByID", res);
+      })
+  }
+
+  onDelete(id) {
+    console.log(id);
+    this.registrationService.deleteProductById(id)
+      .subscribe(res => {
+        this.getAllProducts();
+      })
+  }
+
 
   
 

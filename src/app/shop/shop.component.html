@@ -1,27 +1,93 @@
 <p style="color:#fff">shop works!</p>
 
 <div class="row col-lg-12">
-    <div class="product-container col-lg-12">
-        <mat-card class="product-card" *ngFor="let product of productList">
-            <mat-card-header>
-                <div mat-card-avatar class="product-header-image"></div>
-                <mat-card-title>{{product.title}}</mat-card-title>
-                <mat-card-subtitle>Rs. 499</mat-card-subtitle>
-            </mat-card-header>
-            <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-                alt="Photo of a Shiba Inu"> -->
-            <mat-card-content>
-                <p>{{product.description}}</p>
-            </mat-card-content>
-            <mat-card-actions align="end">
-                <button mat-button>LIKE</button>
-                <div class="add-button-container">
-                    <button mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon">
-                      <mat-icon>plus_one</mat-icon>
-                    </button>
-                  </div>
-            </mat-card-actions>
-        </mat-card>
+    
+
+    <div class="row summary-container col-lg-12">
+        <label>Rohith Chandra</label>
+
+        <mat-stepper class="example-stepper" [linear]="true" [orientation]="(stepperOrientation | async)!">
+            <mat-step [stepControl]="true" label="Fill out your name">
+                <div class="product-container">
+                    <mat-card class="product-card" *ngFor="let product of productList">
+                        <mat-card-header>
+                            <div mat-card-avatar class="product-header-image"></div>
+                            <mat-card-title>{{product.title}}</mat-card-title>
+                            <mat-card-subtitle>Rs. 499</mat-card-subtitle>
+                        </mat-card-header>
+                        <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+                            alt="Photo of a Shiba Inu"> -->
+                        <mat-card-content>
+                            <p>{{product.description}}</p>
+                        </mat-card-content>
+                        <mat-card-actions align="end">
+                            <div class="add-button-container">
+                                <button mat-mini-fab (click)="removeProductFromCart(product)" color="accent"
+                                    aria-label="Example icon button with a plus one icon">
+                                    <mat-icon>remove</mat-icon>
+                                </button>
+                            </div>
+                            <input matInput type="text" [(ngModel)]="product.count">
+                            <div class="add-button-container">
+                                <button mat-mini-fab (click)="addProductToCart(product)" color="accent"
+                                    aria-label="Example icon button with a plus one icon">
+                                    <mat-icon>adds</mat-icon>
+                                </button>
+                            </div>
+                        </mat-card-actions>
+                    </mat-card>
+                </div>
+                <div>
+                    <button mat-button matStepperNext class="btn btn-primary">Next</button>
+                </div>
+            </mat-step>
+            <mat-step [stepControl]="checkOutForm" label="Fill out your details">
+                <form [formGroup]="checkOutForm" (ngSubmit)="onSubmit()" class="registration-form">
+                    <div class="form-group">
+                        <label for="userName">Name:</label>
+                        <input type="text" id="userName" formControlName="userName" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" formControlName="email" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="phoneNumber">Phone Number:</label>
+                        <input type="text" id="phoneNumber" formControlName="phoneNumber" class="form-control">
+                    </div>
+                    <br>
+                    <div>
+                        <button mat-button matStepperPrevious class="btn btn-secondary mso-mr-2">Back</button>
+                        <button mat-button matStepperNext class="btn btn-primary">Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step [stepControl]="paymentForm" label="Total Amount: {{totalAmount}}">
+                <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="payment-form">
+                    <ul class="list-group" *ngIf="ticket.shopCart.length >=1">
+                        <li class="" *ngFor="let prodItem of ticket.shopCart">
+                            <p>{{ prodItem.name }} - {{ prodItem.price }}</p>
+                        </li>        
+                    </ul>  
+                    <ul>
+                        <li> GST (18%):</li>
+                        <li> Total Amount : {{totalAmount}}</li>
+                    </ul>                
+                    <br>
+                    <div>
+                        <button mat-button matStepperPrevious class="btn btn-secondary mso-mr-2">Back</button>
+                        <button mat-button matStepperNext class="btn btn-primary">Next</button>
+                    </div>
+                </form>
+            </mat-step>
+            <mat-step>
+                <ng-template matStepLabel>Done</ng-template>
+                <p>You are now done.</p>
+                <div>
+                    <button mat-button matStepperPrevious class="btn btn-secondary">Back</button>
+                </div>
+            </mat-step>
+        </mat-stepper>
     </div>
 
 </div>

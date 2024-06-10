@@ -25,8 +25,10 @@ import { AlertComponent } from './alert/alert.component';
 import { register } from 'swiper/element/bundle';
 import { SwiperDirective } from './directives/swiper.directive';
 import { ShopComponent } from './shop/shop.component';
-import { ShopService } from './core/shop.service';
+import { ShopService } from './shop/shop.service';
 import { MatButtonModule } from '@angular/material/button';
+import {MatStepperModule} from '@angular/material/stepper';
+
 register();
 
 @NgModule({
@@ -52,7 +54,8 @@ register();
     HttpClientModule,
     MatSnackBarModule,
     MatCardModule,
-    MatButtonModule
+    MatButtonModule,
+    MatStepperModule
 
   ],
   providers: [

@@ -1,3 +1,7 @@
+body {
+    background: aqua;
+}
+
 .help-block {
     font-size: small;
     color: red;
@@ -7,3 +11,42 @@ input.ng-invalid.ng-touched {
     border: 1px solid red;
 }
 
+.registration-form {
+    background-color: whitesmoke;
+    padding: 20px;
+}
+
+.registration-form .form-group {
+    margin-bottom: 10px;;
+}
+
+.registration-form label {
+    color: red;
+    font-size: medium;
+}
+
+.product-card {
+    max-width: 100%;
+    margin-bottom: 10px;
+    margin-right:10px;
+    border: 3px solid orange;
+    border-radius: 10px;
+}
+  
+.product-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+}
+
+.product-card mat-card-content {
+    color: #fff;
+    font-size: medium;
+}
+
+.product-card .btn-danger {
+    background: red;;
+}
+
+.product-card .btn-secondary {
+    background: rgb(115, 93, 192);;
+}
