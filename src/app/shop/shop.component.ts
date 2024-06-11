@@ -1,14 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ShopService } from './shop.service';
 import { Product } from '../core/product.model';
 import { Ticket } from '../core/ticket.model';
 import { ShopcartItem } from '../core/shopcartItem.model';
 
-import {Observable} from 'rxjs';
-import {BreakpointObserver} from '@angular/cdk/layout';
-import {map} from 'rxjs/operators';
-import { StepperOrientation } from '@angular/material/stepper';
+import { Observable } from 'rxjs';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { map } from 'rxjs/operators';
+import { MatStepper, StepperOrientation } from '@angular/material/stepper';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { WindowRefService } from '../window-ref.service';
 
 @Component({
   selector: 'app-shop',
@@ -18,11 +19,14 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 export class ShopComponent implements OnInit {
 
+  @ViewChild('stepper') private myStepper: MatStepper;
+
   productList: Product[];
   ticket: Ticket;
   shopCartItems: [];
   count: number;
   totalAmount: number;
+  paymentSuccess: boolean;
 
   checkOutForm: FormGroup;
   paymentForm: FormGroup;
@@ -30,14 +34,15 @@ export class ShopComponent implements OnInit {
 
   stepperOrientation: Observable<StepperOrientation>;
 
-  constructor(private shopService: ShopService, breakpointObserver: BreakpointObserver,) {
+  constructor(private shopService: ShopService, breakpointObserver: BreakpointObserver, private winRef: WindowRefService) {
     this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
-      .pipe(map(({matches}) => (matches ? 'horizontal' : 'vertical')));
+      .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
   }
 
   ngOnInit() {
-    this.firstFormGroup =  new FormGroup({
+    this.paymentSuccess = false; 
+    this.firstFormGroup = new FormGroup({
       'testInput': new FormControl(null, Validators.required),
     });
 
@@ -47,7 +52,7 @@ export class ShopComponent implements OnInit {
       'phoneNumber': new FormControl(null, [Validators.required, this.mobileValidator])
     });
 
-    this.paymentForm =  new FormGroup({
+    this.paymentForm = new FormGroup({
       'totalPrice': new FormControl(null, Validators.required)
     });
 
@@ -57,49 +62,113 @@ export class ShopComponent implements OnInit {
     this.createTicket();
   }
 
-  mobileValidator(control: FormControl): {[s: string]:boolean} {
-    if(control.value < 5) {
-      return {'inValidNoOfTickets': true};
+  mobileValidator(control: FormControl): { [s: string]: boolean } {
+    if (control.value < 5) {
+      return { 'inValidNoOfTickets': true };
     }
     return null;
   }
 
   loadProducts() {
     this.shopService.getProductList().subscribe(res => {
-      console.log(res);
       this.productList = res;
     });
   }
-  
+
   addProductToCart(product: Product) {
     product.count++;
     let item = this.productList.filter(prod => prod._id == product._id);
-    console.log("item: ", item);
     this.totalAmount = this.totalAmount + item[0].price;
     let shopItem = new ShopcartItem(product._id, product.name, product.price);
-    this.ticket.shopCart.push(shopItem);    
-    
-    console.log(this.ticket);
+    this.ticket.shopCart.push(shopItem);
+
   }
 
   removeProductFromCart(product: Product) {
     product.count--;
     let item = this.ticket.shopCart.find(prod => prod._id == product._id);
-    console.log("Remove Item: ", item)
     this.totalAmount = this.totalAmount + item[0].price;
     let index = this.ticket.shopCart.indexOf(item);
-    if(index > -1) {
+    if (index > -1) {
       this.ticket.shopCart.splice(index, 1);
     }
-    console.log(this.ticket);
   }
 
   createTicket() {
     this.ticket = new Ticket("testName", "testEmail@mso.com", "testbookid", "testId", []);
   }
-  
+
   onSubmit() {
-    console.log("submit");
+  }
+
+  createRazorpayOrder() {
+    this.paymentSuccess = true;
+    this.myStepper.next();
+
+    const txnData = {
+      name: this.checkOutForm.controls.userName.value,
+      email: this.checkOutForm.controls.email.value,
+      phone: this.checkOutForm.controls.phoneNumber.value,
+      amount: this.totalAmount,
+    }
+    this.shopService.onCreateRazorpayOrder(txnData)
+      .subscribe(
+        (res) => {
+          const order_id = res.order_id;
+          this.payWithRazor(order_id, txnData);
+        },
+        (error) => {
+          console.log("Error!: ", error);
+        }
+      )
+  }
+
+  payWithRazor(orderId, txnData) {
+    debugger;
+    const options: any = {
+      key: 'rzp_test_Y9m41KlJg2w3JL',
+      amount: txnData.amount * 100, // amount should be in paise format to display Rs 1255 without decimal point
+      currency: 'INR',
+      name: 'rc_hellboy', // company name or product name
+      description: '',  // product description
+      image: '../../assets/logo.png', // company logo or product image
+      order_id: orderId, // order_id created by you in backend
+      modal: {
+        // We should prevent closing of the form when esc key is pressed.
+        escape: false,
+      },
+      notes: {
+        // include notes if any
+      },
+      theme: {
+        color: '#0c238a'
+      },
+      prefill: {
+        "name": txnData.name,
+        "email": txnData.email,
+        "contact": txnData.phone       
+      }
+    };
+
+    options.handler = ((response, error) => {
+      //options.response = response;
+      txnData.successData = response;
+      txnData.shopCart = this.ticket.shopCart;
+      this.shopService.onCapturePayment(txnData)
+        .subscribe((res) => {
+          console.log("SUCCESS");
+          console.log(res);
+        }, (error) => {
+          console.log("ERROR!: ", error);
+        });
+      // call your backend api to verify payment signature & capture transaction
+    });
+    options.modal.ondismiss = (() => {
+      // handle the case when user closes the form while transaction is in progress
+    });
+    const rzp = new this.winRef.nativeWindow.Razorpay(options);
+    rzp.open();
+
   }
 
 

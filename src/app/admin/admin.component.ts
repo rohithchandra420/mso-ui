@@ -35,7 +35,6 @@ export class AdminComponent implements OnInit {
     };
 
     this.adminService.addWorkshop(workshopDetails).subscribe(res=> {
-      console.log(res);
     }, error=> {
 
     })   
@@ -52,7 +51,6 @@ export class AdminComponent implements OnInit {
   onChange(event) { 
     let file = event.target.files[0]; 
     this.formData.append("workshop", file);
-    console.log(this.formData);
   }
 
 }

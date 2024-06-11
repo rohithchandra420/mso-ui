@@ -6,7 +6,7 @@
     <div class="row summary-container col-lg-12">
         <label>Rohith Chandra</label>
 
-        <mat-stepper class="example-stepper" [linear]="true" [orientation]="(stepperOrientation | async)!">
+        <mat-stepper #stepper class="example-stepper" [linear]="false" [orientation]="(stepperOrientation | async)!">
             <mat-step [stepControl]="true" label="Fill out your name">
                 <div class="product-container">
                     <mat-card class="product-card" *ngFor="let product of productList">
@@ -62,7 +62,7 @@
                     </div>
                 </form>
             </mat-step>
-            <mat-step [stepControl]="paymentForm" label="Total Amount: {{totalAmount}}">
+            <mat-step [stepControl]="true" label="Total Amount: {{totalAmount}}">
                 <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="payment-form">
                     <ul class="list-group" *ngIf="ticket.shopCart.length >=1">
                         <li class="" *ngFor="let prodItem of ticket.shopCart">
@@ -76,14 +76,42 @@
                     <br>
                     <div>
                         <button mat-button matStepperPrevious class="btn btn-secondary mso-mr-2">Back</button>
-                        <button mat-button matStepperNext class="btn btn-primary">Next</button>
+                        <button mat-button matStepperNext class="btn btn-primary" (click)="createRazorpayOrder()">Next</button>
                     </div>
                 </form>
             </mat-step>
-            <mat-step>
+            <mat-step [stepControl]="true">
                 <ng-template matStepLabel>Done</ng-template>
                 <p>You are now done.</p>
-                <div>
+                <div class="row summary-step">
+                    <div class="col-lg-4 col-md-4 col-xs-12">
+                        <mat-card class="success-card">
+                            <mat-card-header>
+                                <div mat-card-avatar class="success-header-image"></div>
+                                <mat-card-title>Success</mat-card-title>
+                                <mat-card-subtitle>Rs. 499</mat-card-subtitle>
+                            </mat-card-header>
+                            <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+                                alt="Photo of a Shiba Inu"> -->
+                            <mat-card-content>
+                                <p>Notes</p>
+                            </mat-card-content>
+                            
+                        </mat-card>
+                        <mat-card class="failed-card">
+                            <mat-card-header>
+                                <div mat-card-avatar class="success-header-image"></div>
+                                <mat-card-title>Success</mat-card-title>
+                                <mat-card-subtitle>Rs. 499</mat-card-subtitle>
+                            </mat-card-header>
+                            <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+                                alt="Photo of a Shiba Inu"> -->
+                            <mat-card-content>
+                                <p>Notes</p>
+                            </mat-card-content>
+                            
+                        </mat-card>
+                    </div>
                     <button mat-button matStepperPrevious class="btn btn-secondary">Back</button>
                 </div>
             </mat-step>

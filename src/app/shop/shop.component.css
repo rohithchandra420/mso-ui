@@ -26,6 +26,24 @@
 .product-card mat-card-content {
     color: #fff;
     font-size: medium;
+    word-wrap: break-word;
+}
+
+.summary-step{ 
+    display: flex;
+    justify-content: center;
+}
+
+.success-card {
+    color: #000;
+    background: #fff;margin-bottom: 10px;
+    border: 3px solid orange;
+}
+
+.failed-card {
+    color: #fcfcfc;
+    background: #ce0707;margin-bottom: 10px;
+    border: 3px solid rgb(172, 14, 14);
 }
 
 .example-button-container {

@@ -60,7 +60,6 @@ export class AuthService {
                     resData.user.name, resData.user.email, resData.user.role, resData.token)
             }))
             .subscribe(response => {
-                console.log(response.user);
 
                 this.loggedIn = true;
                 //this.user = response;

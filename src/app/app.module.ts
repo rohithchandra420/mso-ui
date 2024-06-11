@@ -28,6 +28,7 @@ import { ShopComponent } from './shop/shop.component';
 import { ShopService } from './shop/shop.service';
 import { MatButtonModule } from '@angular/material/button';
 import {MatStepperModule} from '@angular/material/stepper';
+import { WindowRefService } from './window-ref.service';
 
 register();
 
@@ -62,7 +63,8 @@ register();
     AuthService,
     AuthGuard,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
-    ShopService
+    ShopService,
+    WindowRefService,
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpErrorResponse, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from "@angular/common/http";
 import { BehaviorSubject, Subject, catchError, pipe, tap, throwError } from "rxjs";
 import { Router } from "@angular/router";
 import { Product } from "../core/product.model";
@@ -25,5 +25,18 @@ export class ShopService {
         //     new Product("testID4", "Test Name 04", "testTitle4", 899, "Test Description", true, 8),   
         // ];
 
+    }
+
+    onCreateRazorpayOrder(orderData) {
+        return this.http.post<any>(this.tempUrl + "/order", orderData);
+    }
+
+    onCapturePayment(razorData) {
+        // const httpHeaders: HttpHeaders = new HttpHeaders({
+        //     RazorpaySignature: razorData.successData.razorpay_signature
+        // });
+        // delete razorData.successData.razorpay_signature;
+        //console.log(razorData);
+        return this.http.post(this.tempUrl + "/paymentCapture", razorData );
     }
 }
