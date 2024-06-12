@@ -27,6 +27,7 @@ export class ShopComponent implements OnInit {
   count: number;
   totalAmount: number;
   paymentSuccess: boolean;
+  transactionDetails;
 
   checkOutForm: FormGroup;
   paymentForm: FormGroup;
@@ -41,7 +42,12 @@ export class ShopComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.paymentSuccess = false; 
+    this.paymentSuccess = false;
+    this.transactionDetails = {
+      status:'',
+      payload: {}
+    };
+
     this.firstFormGroup = new FormGroup({
       'testInput': new FormControl(null, Validators.required),
     });
@@ -95,7 +101,7 @@ export class ShopComponent implements OnInit {
   }
 
   createTicket() {
-    this.ticket = new Ticket("testName", "testEmail@mso.com", "testbookid", "testId", []);
+    this.ticket = new Ticket("testName", "testEmail@mso.com", 91, "testbookid", "testId", []);
   }
 
   onSubmit() {
@@ -157,9 +163,11 @@ export class ShopComponent implements OnInit {
       this.shopService.onCapturePayment(txnData)
         .subscribe((res) => {
           console.log("SUCCESS");
-          console.log(res);
+          this.transactionDetails = res;
+          console.log(this.transactionDetails)
         }, (error) => {
-          console.log("ERROR!: ", error);
+
+          console.log("ERROR!: ", error.error);
         });
       // call your backend api to verify payment signature & capture transaction
     });
@@ -169,6 +177,10 @@ export class ShopComponent implements OnInit {
     const rzp = new this.winRef.nativeWindow.Razorpay(options);
     rzp.open();
 
+  }
+
+  showTransactionMessage (data) {
+    console.log("transaction msg : ", data);
   }
 
 

@@ -40,6 +40,11 @@
     border: 3px solid orange;
 }
 
+.success-header-image {
+    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-size: cover;
+}
+
 .failed-card {
     color: #fcfcfc;
     background: #ce0707;margin-bottom: 10px;
