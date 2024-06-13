@@ -94,3 +94,6 @@ mat-card-actions input {
     font-size: medium;
 }
   
+.qrcodeImage {
+    padding-left: 20%;
+}

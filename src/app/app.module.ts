@@ -29,6 +29,7 @@ import { ShopService } from './shop/shop.service';
 import { MatButtonModule } from '@angular/material/button';
 import {MatStepperModule} from '@angular/material/stepper';
 import { WindowRefService } from './window-ref.service';
+import { QRCodeModule } from 'angularx-qrcode';
 
 register();
 
@@ -56,7 +57,8 @@ register();
     MatSnackBarModule,
     MatCardModule,
     MatButtonModule,
-    MatStepperModule
+    MatStepperModule,
+    QRCodeModule
 
   ],
   providers: [

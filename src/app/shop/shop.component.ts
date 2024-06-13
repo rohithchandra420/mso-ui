@@ -10,6 +10,11 @@ import { map } from 'rxjs/operators';
 import { MatStepper, StepperOrientation } from '@angular/material/stepper';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { WindowRefService } from '../window-ref.service';
+import { Router } from '@angular/router';
+
+export class NgxQrCode {
+  text: string;
+}
 
 @Component({
   selector: 'app-shop',
@@ -26,8 +31,10 @@ export class ShopComponent implements OnInit {
   shopCartItems: [];
   count: number;
   totalAmount: number;
-  paymentSuccess: boolean;
+  isPaymentSuccess: boolean;
   transactionDetails;
+  qrdata: string = "sampleData";
+  ticketName: string;
 
   checkOutForm: FormGroup;
   paymentForm: FormGroup;
@@ -35,14 +42,14 @@ export class ShopComponent implements OnInit {
 
   stepperOrientation: Observable<StepperOrientation>;
 
-  constructor(private shopService: ShopService, breakpointObserver: BreakpointObserver, private winRef: WindowRefService) {
+  constructor(private router: Router, private shopService: ShopService, breakpointObserver: BreakpointObserver, private winRef: WindowRefService) {
     this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
       .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
   }
 
   ngOnInit() {
-    this.paymentSuccess = false;
+    this.isPaymentSuccess = false;
     this.transactionDetails = {
       status:'',
       payload: {}
@@ -108,9 +115,6 @@ export class ShopComponent implements OnInit {
   }
 
   createRazorpayOrder() {
-    this.paymentSuccess = true;
-    this.myStepper.next();
-
     const txnData = {
       name: this.checkOutForm.controls.userName.value,
       email: this.checkOutForm.controls.email.value,
@@ -161,13 +165,19 @@ export class ShopComponent implements OnInit {
       txnData.successData = response;
       txnData.shopCart = this.ticket.shopCart;
       this.shopService.onCapturePayment(txnData)
-        .subscribe((res) => {
+        .subscribe((res: {status: string, payload: Ticket}) => {
+          this.isPaymentSuccess = true;
           console.log("SUCCESS");
-          this.transactionDetails = res;
-          console.log(this.transactionDetails)
+          this.transactionDetails.status = res.status;
+          this.transactionDetails.payload = res.payload;
+          this.showTransactionMessage(this.transactionDetails);
+          this.isPaymentSuccess = true;
+          this.myStepper.next();
         }, (error) => {
-
+          this.isPaymentSuccess = false;
           console.log("ERROR!: ", error.error);
+          this.isPaymentSuccess = true;
+          this.myStepper.next();
         });
       // call your backend api to verify payment signature & capture transaction
     });
@@ -180,7 +190,23 @@ export class ShopComponent implements OnInit {
   }
 
   showTransactionMessage (data) {
+    if(data || data.status == 'ok') {
+      let qrValues = {
+        tid: data.payload._id,
+        oid: data.payload.orderId,
+        pid: data.payload.paymentId,
+      };
+      this.qrdata = JSON.stringify(qrValues);
+    } else {
+      console.log("transDetails Not Ok");
+    }
+    this.transactionDetails.payload.email = data.payload.email;
+    this.ticketName = "Rohith"
     console.log("transaction msg : ", data);
+  }
+
+  goHome() {
+    this.router.navigate(['/dashboard'])
   }
 
 

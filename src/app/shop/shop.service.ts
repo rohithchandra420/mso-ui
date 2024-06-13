@@ -3,6 +3,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from "@angular
 import { BehaviorSubject, Subject, catchError, pipe, tap, throwError } from "rxjs";
 import { Router } from "@angular/router";
 import { Product } from "../core/product.model";
+import { Ticket } from "../core/ticket.model";
 
 @Injectable()
 export class ShopService {
