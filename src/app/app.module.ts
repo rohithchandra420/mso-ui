@@ -30,6 +30,13 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatStepperModule} from '@angular/material/stepper';
 import { WindowRefService } from './window-ref.service';
 import { QRCodeModule } from 'angularx-qrcode';
+import { TicketsComponent } from './tickets/tickets.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { TicketsService } from './tickets/tickets.service';
+import { MatDialogModule } from '@angular/material/dialog';
+import { TicketDetailsPopUp } from './tickets/ticket.details.popup/ticket.details.popup';
 
 register();
 
@@ -45,6 +52,8 @@ register();
     ErrorPageComponent,
     AdminComponent,
     ShopComponent,
+    TicketsComponent,
+    TicketDetailsPopUp
   ],
   imports: [
     BrowserModule,
@@ -58,7 +67,11 @@ register();
     MatCardModule,
     MatButtonModule,
     MatStepperModule,
-    QRCodeModule
+    QRCodeModule,
+    MatTableModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule
 
   ],
   providers: [
@@ -67,6 +80,7 @@ register();
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
     ShopService,
     WindowRefService,
+    TicketsService  
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

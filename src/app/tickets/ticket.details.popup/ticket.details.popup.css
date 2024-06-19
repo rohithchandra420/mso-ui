@@ -1,0 +1,23 @@
+/* cdk-overlay-pane */
+@media only screen and (max-width: 600px) {
+    table {
+      background-color: red;
+    }
+  
+    .cdk-overlay-pane {
+      position: absolute !important ;
+      top: 20%;
+    }
+  }
+
+.shop-items {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.shop-item-label {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-evenly;
+}

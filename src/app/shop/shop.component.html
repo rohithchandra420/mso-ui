@@ -1,19 +1,16 @@
-<p style="color:#fff">shop works!</p>
 
 <div class="row col-lg-12">
 
 
     <div class="row summary-container col-lg-12">
-        <label>Rohith Chandra</label>
-
-        <mat-stepper #stepper class="example-stepper" [linear]="true" [orientation]="(stepperOrientation | async)!">
+        <mat-stepper #stepper class="shop-stepper" [linear]="true" [orientation]="(stepperOrientation | async)!">
             <mat-step [stepControl]="totalAmount" label="Fill out your name">
                 <div class="product-container">
                     <mat-card class="product-card" *ngFor="let product of productList">
                         <mat-card-header>
                             <div mat-card-avatar class="product-header-image"></div>
-                            <mat-card-title>{{product.title}}</mat-card-title>
-                            <mat-card-subtitle>Rs. 499</mat-card-subtitle>
+                            <mat-card-title>{{product.name}}</mat-card-title>
+                            <mat-card-subtitle>Rs. {{product.price}}</mat-card-subtitle>
                         </mat-card-header>
                         <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
                             alt="Photo of a Shiba Inu"> -->
@@ -23,7 +20,7 @@
                         <mat-card-actions align="end">
                             <div class="add-button-container">
                                 <button mat-mini-fab (click)="removeProductFromCart(product)" color="accent"
-                                    aria-label="Example icon button with a plus one icon">
+                                    aria-label="Example icon button with a plus one icon" [disabled]="product.count==0">
                                     <mat-icon>remove</mat-icon>
                                 </button>
                             </div>
@@ -64,7 +61,7 @@
             </mat-step>
             <mat-step [stepControl]="true" label="Total Amount: {{totalAmount}}">
                 <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="payment-form">
-                    <ul class="list-group" *ngIf="ticket.shopCart.length >=1">
+                    <ul class="list-group" *ngIf="ticket && ticket.shopCart.length >=1">
                         <li class="" *ngFor="let prodItem of ticket.shopCart">
                             <p>{{ prodItem.name }} - {{ prodItem.price }}</p>
                         </li>

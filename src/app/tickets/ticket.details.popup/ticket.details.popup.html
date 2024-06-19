@@ -1,0 +1,22 @@
+<h1 mat-dialog-title>Hi {{ticketDetails.name}}</h1>
+<div mat-dialog-content>
+    <p>Mr. {{ticketDetails.name}}</p>
+    <p>{{ticketDetails.email}}</p>
+    <p>{{ticketDetails.phone}}</p>
+    <p>Ticket Id: {{ticketDetails._id}}</p>
+    <p>Order Id: {{ticketDetails.orderId}}</p>
+    <p>Payment Id: {{ticketDetails.paymentId}}</p>
+    <p>Total Amount : Rs. {{ticketDetails.amount}}</p>
+    <div class="shop-items" *ngFor="let prodItem of ticketDetails.shopCart ">
+        <div class="shop-item-label">{{ prodItem.name }} - {{ prodItem.price }}</div>
+        <button mat-raised-button color="primary" (click)="onAdmit(prodItem)">Admit</button>
+    </div>
+    <p>Purchased At: {{ticketDetails.createdAt}}</p>
+  <!-- <mat-form-field>
+    <input matInput [(ngModel)]="ticketDetails.animal">
+  </mat-form-field> -->
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <!-- <button mat-button [mat-dialog-close]="ticketDetails.animal" cdkFocusInitial>Ok</button> -->
+</div>

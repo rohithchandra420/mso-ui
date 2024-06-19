@@ -10,12 +10,21 @@
     margin-right: 2rem;
 }
 
+.shop-stepper {
+    background: none;
+}
+
 
 .product-card {
     max-width: 100%;
     margin-bottom: 10px;
-    border: 3px solid orange;
+    border: 1px solid orange;
     border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(255, 153, 0, 0.2), 0 6px 20px 0 rgba(255, 153, 0, 0.19);
+}
+
+.product-card mat-card-title {
+    color: #fff;
 }
   
 .product-header-image {
@@ -70,10 +79,6 @@ mat-card-actions input {
     margin-right: 5px;
     margin-left: 5px;
     padding: 5px;
-}
-
-.summary-container {
-    background: #fff;
 }
 
 .form-group {

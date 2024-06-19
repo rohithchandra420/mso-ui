@@ -50,3 +50,12 @@ input.ng-invalid.ng-touched {
 .product-card .btn-secondary {
     background: rgb(115, 93, 192);;
 }
+
+.product-card mat-card-title {
+    color: #fff;
+}
+
+.product-card mat-card-content {
+    word-wrap: break-word;
+}
+

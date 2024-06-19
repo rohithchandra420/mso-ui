@@ -29,8 +29,8 @@
         <mat-card class="product-card col-lg-3 col-md-12 col-xs-12 mr-2" *ngFor="let product of productList">
             <mat-card-header>
                 <div mat-card-avatar class="product-header-image"></div>
-                <mat-card-title>{{product.title}}</mat-card-title>
-                <mat-card-subtitle>Rs. 499</mat-card-subtitle>
+                <mat-card-title>{{product.name}}</mat-card-title>
+                <mat-card-subtitle>Rs. {{product.price}}</mat-card-subtitle>
             </mat-card-header>
             <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
                     alt="Photo of a Shiba Inu"> -->

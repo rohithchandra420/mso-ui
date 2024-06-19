@@ -55,6 +55,8 @@ export class ShopComponent implements OnInit {
       payload: {}
     };
 
+    this.ticket = new Ticket("userName", "userEmail", 1234567890, "oid", 1, new Date, "" , [],);
+
     this.firstFormGroup = new FormGroup({
       'testInput': new FormControl(null, Validators.required),
     });
@@ -92,7 +94,7 @@ export class ShopComponent implements OnInit {
     product.count++;
     let item = this.productList.filter(prod => prod._id == product._id);
     this.totalAmount = this.totalAmount + item[0].price;
-    let shopItem = new ShopcartItem(product._id, product.name, product.price);
+    let shopItem = new ShopcartItem(product._id, product.name, product.price, "New");
     this.ticket.shopCart.push(shopItem);
 
   }
@@ -100,7 +102,7 @@ export class ShopComponent implements OnInit {
   removeProductFromCart(product: Product) {
     product.count--;
     let item = this.ticket.shopCart.find(prod => prod._id == product._id);
-    this.totalAmount = this.totalAmount + item[0].price;
+    this.totalAmount = this.totalAmount - item.price;
     let index = this.ticket.shopCart.indexOf(item);
     if (index > -1) {
       this.ticket.shopCart.splice(index, 1);
@@ -108,7 +110,7 @@ export class ShopComponent implements OnInit {
   }
 
   createTicket() {
-    this.ticket = new Ticket("testName", "testEmail@mso.com", 91, "testbookid", "testId", []);
+    // this.ticket = new Ticket("testName", "testEmail@mso.com", 91, "testbookid", "testId", []);
   }
 
   onSubmit() {
