@@ -49,3 +49,16 @@
 .header .navbar a:hover{
     color: var(--main-color);
 } */
+
+@media only screen and (max-width: 600px) {
+    .mso-nav-long {
+        display: none;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .mos-nav-short {
+        display: none;
+    }
+}
+

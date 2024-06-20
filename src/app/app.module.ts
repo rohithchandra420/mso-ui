@@ -30,6 +30,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {MatStepperModule} from '@angular/material/stepper';
 import { WindowRefService } from './window-ref.service';
 import { QRCodeModule } from 'angularx-qrcode';
+import { NgxScannerQrcodeModule, LOAD_WASM } from 'ngx-scanner-qrcode';
 import { TicketsComponent } from './tickets/tickets.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatInputModule } from '@angular/material/input';
@@ -37,8 +38,16 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { TicketsService } from './tickets/tickets.service';
 import { MatDialogModule } from '@angular/material/dialog';
 import { TicketDetailsPopUp } from './tickets/ticket.details.popup/ticket.details.popup';
+import { SafePipe } from './core/safe.pipe';
+import { QrScannerComponent } from './tickets/qrscanner-popup/qrscanner.component';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatIconModule } from '@angular/material/icon';
+
 
 register();
+// #QRCode Scanner: Necessary to solve the problem of losing internet connection
+LOAD_WASM().subscribe()
 
 @NgModule({
   declarations: [
@@ -53,7 +62,9 @@ register();
     AdminComponent,
     ShopComponent,
     TicketsComponent,
-    TicketDetailsPopUp
+    TicketDetailsPopUp,
+    SafePipe,
+    QrScannerComponent
   ],
   imports: [
     BrowserModule,
@@ -71,8 +82,11 @@ register();
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDialogModule
-
+    MatDialogModule,
+    NgxScannerQrcodeModule,
+    MatSidenavModule,
+    MatListModule,
+    MatIconModule
   ],
   providers: [
     AuthService,

@@ -8,8 +8,8 @@
     <p>Payment Id: {{ticketDetails.paymentId}}</p>
     <p>Total Amount : Rs. {{ticketDetails.amount}}</p>
     <div class="shop-items" *ngFor="let prodItem of ticketDetails.shopCart ">
-        <div class="shop-item-label">{{ prodItem.name }} - {{ prodItem.price }}</div>
-        <button mat-raised-button color="primary" (click)="onAdmit(prodItem)">Admit</button>
+        <div class="shop-item-label">{{ prodItem.name }} - Rs. {{ prodItem.price }}</div>
+        <!-- <button mat-raised-button color="primary" (click)="onAdmit(prodItem)" [disabled]="prodItem.status != 'New'">Admit</button> -->
     </div>
     <p>Purchased At: {{ticketDetails.createdAt}}</p>
   <!-- <mat-form-field>
@@ -17,6 +17,7 @@
   </mat-form-field> -->
 </div>
 <div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-raised-button color="primary" (click)="onAdmit(ticketDetails)" [disabled]="ticketDetails.status != 'New'">Admit</button>
+  <button mat-button (click)="onNoClick()">Close</button>
   <!-- <button mat-button [mat-dialog-close]="ticketDetails.animal" cdkFocusInitial>Ok</button> -->
 </div>

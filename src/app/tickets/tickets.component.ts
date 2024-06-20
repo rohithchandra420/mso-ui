@@ -6,32 +6,8 @@ import { TicketsService } from './tickets.service';
 
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { TicketDetailsPopUp } from './ticket.details.popup/ticket.details.popup';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
-
-export interface DialogData {
-  animal: string;
-  name: string;
-}
-
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
-];  
+import { QrScannerComponent } from './qrscanner-popup/qrscanner.component';
+ 
 @Component({
   selector: 'app-tickets',
   templateUrl: './tickets.component.html',
@@ -41,6 +17,7 @@ export class TicketsComponent implements OnInit{
 
   displayedColumns: string[] = ['name', 'email', 'phone', 'ticketId', 'orderId', 'paymentId', 'amount'];
   dataSource;
+  filterValue="";
 
   constructor(private ticketsService:TicketsService, public dialog: MatDialog) {
 
@@ -58,7 +35,6 @@ export class TicketsComponent implements OnInit{
   getAllTickets() {
     this.ticketsService.getAllTickets()
       .subscribe(res => {
-        console.log(res)
         this.populateTable(res)
       }, error => {
         console.log("Error GET ALL TICKETS")
@@ -70,7 +46,6 @@ export class TicketsComponent implements OnInit{
   }
 
   openTicketDetails(row) {
-    console.log(row); 
     const dialogRef = this.dialog.open(TicketDetailsPopUp, {
       width: '500px',
       data: row
@@ -78,12 +53,22 @@ export class TicketsComponent implements OnInit{
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
-      //this.animal = result;
+      this.getAllTickets();
     });
   }
 
   openScanner() {
-    
+    const dialogRef = this.dialog.open(QrScannerComponent, {
+      width: '90%',
+      data: "Apple"
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed', result);
+      //this.animal = result;
+      this.filterValue = result;
+      this.dataSource.filter = result.trim().toLowerCase();
+    });
   }
 
 }

@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from "@angular/core";
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { Ticket } from "src/app/core/ticket.model";
+import { TicketsService } from "../tickets.service";
 
 @Component({
     selector: 'ticket-details-popup',
@@ -10,8 +11,7 @@ import { Ticket } from "src/app/core/ticket.model";
 
 export class TicketDetailsPopUp implements OnInit{
 
-    constructor(
-      public dialogRef: MatDialogRef<TicketDetailsPopUp>,
+    constructor(public dialogRef: MatDialogRef<TicketDetailsPopUp>, private ticketService: TicketsService,
       @Inject(MAT_DIALOG_DATA) public ticketDetails: Ticket) {}
     
     ngOnInit(): void {   
@@ -23,12 +23,17 @@ export class TicketDetailsPopUp implements OnInit{
     }
 
     populatePopup(data) {
-        console.log(data);
+        //console.log(data);
     }
 
-    onAdmit(item) {
-        let ticketId = this.ticketDetails._id;
-        console.log("Item: ",item)
+    onAdmit(ticket: Ticket) {
+        console.log("Ticket: ",ticket)
+        this.ticketService.updateTicketToAdmit(ticket).subscribe(res => {
+          console.log(res);
+          this.ticketDetails = res;
+        }, error => {
+          console.log(error);
+        })
     }
   
   }

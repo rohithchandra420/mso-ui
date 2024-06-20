@@ -1,0 +1,11 @@
+.qrdata-items {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.qrdata-item-label {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-evenly;
+}

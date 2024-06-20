@@ -90,7 +90,6 @@ export class RegistrationComponent implements OnInit {
         return throwError(errorRes);
       }))
       .subscribe(response => {
-        console.log(response);
         this.productList = response;
       });
   }
@@ -98,12 +97,10 @@ export class RegistrationComponent implements OnInit {
   getProductById(id) {
     this.registrationService.getProductById(id)
       .subscribe(res => {
-        console.log("ByID", res);
       })
   }
 
   onDelete(id) {
-    console.log(id);
     this.registrationService.deleteProductById(id)
       .subscribe(res => {
         this.getAllProducts();

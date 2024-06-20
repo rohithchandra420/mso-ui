@@ -14,4 +14,11 @@ export class TicketsService {
     getAllTickets() {
         return this.http.get<[Ticket]>(this.tempUrl + "/GetAllTickets");
     }
+
+    updateTicketToAdmit(ticket: Ticket) {
+        let data = {
+            _id: ticket._id
+        };
+        return this.http.post<Ticket>(this.tempUrl + "/AdmitTicket", data);
+    }
 }

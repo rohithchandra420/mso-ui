@@ -1,26 +1,45 @@
 <mat-toolbar color="primary" class="header">
   <img src="assets/logo.png" class="headlogo">
-  <a href="#" routerLink="/dashboard" class="logo"><span>MAKE SOME O</span>छा</a>  
+  <a href="#" routerLink="/dashboard" class="logo"><span>MAKE SOME O</span>छा</a>
 
-  <div class="spacer"></div>       
+  <div class="spacer"></div>
+  <div class="mso-nav-long">
     <a mat-button class="active" routerLink="/dashboard" *ngIf="isAuthenticated">Dashboard</a>
     <a mat-button [routerLink]="['/register']" *ngIf="isAuthenticated">Register</a>
     <a mat-button [routerLink]="['/tickets']" *ngIf="isAuthenticated">Tickets</a>
     <a mat-button [routerLink]="['/admin']" *ngIf="userRole === 'admin'">Admin</a>
-    <a mat-button class="active" routerLink="/login" *ngIf="!isAuthenticated">Login</a>
+    <a mat-button class="active" routerLink="/login" *ngIf="false">Login</a>
     <a mat-button class="active" (click)="onLogOut()" *ngIf="isAuthenticated">Logout</a>
+  </div>
+
+
+  <div class="mos-nav-short">
+    <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item [routerLink]="['/tickets']" *ngIf="isAuthenticated">
+        <span>Tickets</span>
+      </button>
+      <button mat-menu-item [routerLink]="['/register']" *ngIf="isAuthenticated">
+        <span>Register</span>
+      </button>
+      <button mat-menu-item [routerLink]="['/admin']" *ngIf="userRole === 'admin'">
+        <span>Admin</span>
+      </button>
+      <button mat-menu-item class="active" routerLink="/login" *ngIf="false">
+        <span>Login</span>
+      </button>
+      <button mat-menu-item class="active" (click)="onLogOut()" *ngIf="isAuthenticated">
+        <span>Logout</span>
+      </button>
+      
+      <!-- <button mat-menu-item>
+        <mat-icon>notifications_off</mat-icon>
+        <span>Disable alerts</span>
+      </button> -->
+    </mat-menu>
+  </div>
+  
+
 </mat-toolbar>
-
-
-
-
-
-
-<!-- Router Added
-<mat-toolbar color="primary">
-    <span>User Management</span>
-     <div class="spacer"></div>
-       <a mat-button routerLink="/users">Home</a>
-       <a mat-button routerLink="/add">About</a>
-       <a mat-button routerLink="/">Contact</a>
-</mat-toolbar> -->

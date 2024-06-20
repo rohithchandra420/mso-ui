@@ -55,7 +55,7 @@ export class ShopComponent implements OnInit {
       payload: {}
     };
 
-    this.ticket = new Ticket("userName", "userEmail", 1234567890, "oid", 1, new Date, "" , [],);
+    this.ticket = new Ticket("userName", "userEmail", 1234567890, "oid", 1, "New" ,new Date, "" , [],);
 
     this.firstFormGroup = new FormGroup({
       'testInput': new FormControl(null, Validators.required),
@@ -169,7 +169,6 @@ export class ShopComponent implements OnInit {
       this.shopService.onCapturePayment(txnData)
         .subscribe((res: {status: string, payload: Ticket}) => {
           this.isPaymentSuccess = true;
-          console.log("SUCCESS");
           this.transactionDetails.status = res.status;
           this.transactionDetails.payload = res.payload;
           this.showTransactionMessage(this.transactionDetails);
@@ -203,7 +202,6 @@ export class ShopComponent implements OnInit {
       console.log("transDetails Not Ok");
     }
     this.transactionDetails.payload.email = data.payload.email;
-    this.ticketName = "Rohith"
     console.log("transaction msg : ", data);
   }
 
