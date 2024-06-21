@@ -69,15 +69,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   signUp() {
-    let userDetails = {
-      "name": "Admin",
-      "gender": "M",
-      "email": "Admin123@gmail.com",
-      "password": "Admin@123",
-      "bookingId": "TestBookingId1",
-      "ticketId": "TicketID1"
-    };
-    this.authService.signUp(userDetails)
+    
   }
 
 
