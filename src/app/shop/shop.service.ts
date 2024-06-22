@@ -4,7 +4,7 @@ import { BehaviorSubject, Subject, catchError, pipe, tap, throwError } from "rxj
 import { Router } from "@angular/router";
 import { Product } from "../core/product.model";
 import { Ticket } from "../core/ticket.model";
-import { environment } from "src/environments/environment.development";
+import { environment } from "src/environments/environment";
 
 @Injectable()
 export class ShopService {
