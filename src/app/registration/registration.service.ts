@@ -5,7 +5,7 @@ import { User } from "../core/user.model";
 import { AuthService } from "../core/auth.service";
 import { exhaustMap, take } from "rxjs";
 import { Product } from "../core/product.model";
-import { environment } from "src/environments/environment.development";
+import { environment } from "src/environments/environment";
 
 @Injectable({ providedIn: 'root' })
 

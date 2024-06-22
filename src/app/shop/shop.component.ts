@@ -11,7 +11,7 @@ import { MatStepper, StepperOrientation } from '@angular/material/stepper';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { WindowRefService } from '../window-ref.service';
 import { Router } from '@angular/router';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 
 export class NgxQrCode {
   text: string;
