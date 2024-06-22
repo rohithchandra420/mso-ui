@@ -5,6 +5,7 @@ import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
 import { User } from '../core/user.model';
+import { environment } from 'src/environments/environment.development';
 
 import { RegistrationService } from './registration.service'
 import { Product } from '../core/product.model';
@@ -23,7 +24,7 @@ export class RegistrationComponent implements OnInit {
   userList: User[] = [];
   
 
-  url = "http://localhost:3000/";
+  url = environment.URL;
 
   constructor(private http: HttpClient, private registrationService: RegistrationService) {}
 
@@ -76,7 +77,7 @@ export class RegistrationComponent implements OnInit {
 
   getAllProducts() {
     this.http
-      .get<[Product]>("http://localhost:3000/getAllProducts")
+      .get<[Product]>( this.url + "/getAllProducts")
       .pipe(map(responseData => {
         const postsArray = [];
         for(const key in responseData) {

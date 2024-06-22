@@ -4,19 +4,20 @@ import { BehaviorSubject, Subject, catchError, pipe, tap, throwError } from "rxj
 import { Router } from "@angular/router";
 import { Product } from "../core/product.model";
 import { Ticket } from "../core/ticket.model";
+import { environment } from "src/environments/environment.development";
 
 @Injectable()
 export class ShopService {
     productList: Product[];
     
-    tempUrl = "http://localhost:3000";
+    url = environment.URL;
 
     constructor(private http: HttpClient) {
 
     }
 
     getProductList() {
-        return this.http.get<[Product]>(this.tempUrl + "/getAllProducts");
+        return this.http.get<[Product]>(this.url + "/getAllProducts");
 
 
         // this. productList = [
@@ -29,7 +30,7 @@ export class ShopService {
     }
 
     onCreateRazorpayOrder(orderData) {
-        return this.http.post<any>(this.tempUrl + "/order", orderData);
+        return this.http.post<any>(this.url + "/order", orderData);
     }
 
     onCapturePayment(razorData) {
@@ -38,6 +39,6 @@ export class ShopService {
         // });
         // delete razorData.successData.razorpay_signature;
         //console.log(razorData);
-        return this.http.post(this.tempUrl + "/paymentCapture", razorData );
+        return this.http.post(this.url + "/paymentCapture", razorData );
     }
 }

@@ -11,6 +11,7 @@ import { MatStepper, StepperOrientation } from '@angular/material/stepper';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { WindowRefService } from '../window-ref.service';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment.development';
 
 export class NgxQrCode {
   text: string;
@@ -136,9 +137,8 @@ export class ShopComponent implements OnInit {
   }
 
   payWithRazor(orderId, txnData) {
-    debugger;
     const options: any = {
-      key: 'rzp_test_Y9m41KlJg2w3JL',
+      key: environment.RAZ_API_KEY,
       amount: txnData.amount * 100, // amount should be in paise format to display Rs 1255 without decimal point
       currency: 'INR',
       name: 'rc_hellboy', // company name or product name

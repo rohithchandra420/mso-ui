@@ -29,7 +29,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.showSpinner = true;
     this.errorSub = this.authService.loginErrorMessageEmitter.subscribe(errorMessage => {
-      debugger;
+      //debugger;
       this.loginError = errorMessage;
     })
   }

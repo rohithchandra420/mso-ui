@@ -5,11 +5,12 @@ import { User } from "./user.model";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { BehaviorSubject, Subject, catchError, pipe, tap, throwError } from "rxjs";
 import { Router } from "@angular/router";
+import { environment } from "src/environments/environment.development";
 
 @Injectable()
 export class AuthService {
     loggedIn = false;
-    tempUrl = "http://localhost:3000";
+    url = environment.URL;
 
 
     user = new BehaviorSubject<User>(null);
@@ -44,7 +45,7 @@ export class AuthService {
     }
 
     signUp(signUpDetails) {
-        this.http.post<{user:User, token:string}>(this.tempUrl + "/createUsers", signUpDetails)
+        this.http.post<{user:User, token:string}>(this.url + "/createUsers", signUpDetails)
             .pipe(catchError(this.handleError), tap(resData => {
                     const user = new User(resData.user.id, 
                         resData.user.name, resData.user.email,
@@ -54,7 +55,7 @@ export class AuthService {
     }
 
     logIn(loginDetails) {
-        this.http.post<{user:User, token:string}>(this.tempUrl + "/login", loginDetails)
+        this.http.post<{user:User, token:string}>(this.url + "/login", loginDetails)
             .pipe(catchError(this.handleError), tap(resData => {
                 this.handleAuthentication(resData.user.id,
                     resData.user.name, resData.user.email, resData.user.role, resData.token)
@@ -74,7 +75,7 @@ export class AuthService {
 
                 this.router.navigate(['dashboard']);
             }, error => {
-                debugger;
+                //debugger;
                 this.loggedIn = false;
                 this.loginErrorMessageEmitter.next(error);
             });

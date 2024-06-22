@@ -5,11 +5,12 @@ import { User } from "../core/user.model";
 import { AuthService } from "../core/auth.service";
 import { exhaustMap, take } from "rxjs";
 import { Product } from "../core/product.model";
+import { environment } from "src/environments/environment.development";
 
 @Injectable({ providedIn: 'root' })
 
 export class RegistrationService {
-    url = "http://localhost:3000";
+    url = environment.URL;
 
     constructor(private http: HttpClient, private authService: AuthService) { }
 
