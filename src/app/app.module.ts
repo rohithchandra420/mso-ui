@@ -47,7 +47,7 @@ import { MatIconModule } from '@angular/material/icon';
 
 register();
 // #QRCode Scanner: Necessary to solve the problem of losing internet connection
-LOAD_WASM().subscribe()
+//LOAD_WASM().subscribe()
 
 @NgModule({
   declarations: [

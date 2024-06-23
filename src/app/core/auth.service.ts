@@ -5,7 +5,7 @@ import { User } from "./user.model";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { BehaviorSubject, Subject, catchError, pipe, tap, throwError } from "rxjs";
 import { Router } from "@angular/router";
-import { environment } from "src/environments/environment";
+import { environment } from "src/environments/environment.development";
 
 @Injectable()
 export class AuthService {

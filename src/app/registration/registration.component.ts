@@ -5,7 +5,7 @@ import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
 import { User } from '../core/user.model';
-import { environment } from 'src/environments/environment';
+import { environment } from 'src/environments/environment.development';
 
 import { RegistrationService } from './registration.service'
 import { Product } from '../core/product.model';
