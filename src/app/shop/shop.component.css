@@ -1,5 +1,17 @@
-.btn-primary {
+.btn{
+    margin-top: 1rem;
+    display: inline-block;
+    padding: .8rem 3rem;
+    font-size: 1.7rem;
+    border-radius: 0.5rem;
     background: #E2E132;
+    color: #0C0C01 !important;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn:hover{
+    background:var(--main-color);
 }
 
 .btn-secondary {
@@ -17,10 +29,11 @@
 
 .product-card {
     max-width: 100%;
-    margin-bottom: 10px;
-    border: 1px solid orange;
+    margin-bottom: 15px;
+    border: 2px solid orange;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(255, 153, 0, 0.2), 0 6px 20px 0 rgba(255, 153, 0, 0.19);
+    background-color: #000;
 }
 
 .product-card mat-card-title {
@@ -28,7 +41,7 @@
 }
   
 .product-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-image: url('https://raw.githubusercontent.com/rohithchandra420/mso-ui/main/src/assets/logo.png');
     background-size: cover;
 }
 
@@ -44,13 +57,21 @@
 }
 
 .success-card {
-    color: #000;
+    color: #fff;
     background: #fff;margin-bottom: 10px;
-    border: 3px solid orange;
+    background: rgb(0, 126, 0);
+    border-radius: 15px;
+    box-shadow: 0 10px 10px 0 rgba(132, 248, 132, 0.2), 0 15px 30px 0 rgba(140, 255, 140, 0.19);
+}
+
+.success-card .list-group-item {
+    background: rgb(0, 126, 0);
+    color: #fff;
+    font-weight: 400;
 }
 
 .success-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-image: url('https://raw.githubusercontent.com/rohithchandra420/mso-ui/main/src/assets/logo.png');
     background-size: cover;
 }
 

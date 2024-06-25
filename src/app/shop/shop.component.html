@@ -59,7 +59,7 @@
                     </div>
                 </form>
             </mat-step>
-            <mat-step [stepControl]="true" label="Total Amount: {{totalAmount}}">
+            <mat-step [completed]="isCaptured" label="Total Amount: {{totalAmount}}">
                 <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="payment-form">
                     <ul class="list-group" *ngIf="ticket && ticket.shopCart.length >=1">
                         <li class="" *ngFor="let prodItem of ticket.shopCart">
@@ -74,7 +74,7 @@
                     <div>
                         <button mat-button matStepperPrevious class="btn btn-secondary mso-mr-2">Back</button>
                         <button mat-button class="btn btn-primary mso-mr-2" (click)="createRazorpayOrder()" [disabled]="totalAmount <= 0">Pay</button>
-                        <button mat-button matStepperNext class="btn btn-primary">Finish</button>
+                        <button mat-button matStepperNext class="btn btn-primary" [disabled]="!isCaptured">View Ticket</button>
                     </div>
                 </form>
             </mat-step>
@@ -86,8 +86,7 @@
                         <mat-card class="success-card" *ngIf="isPaymentSuccess">
                             <mat-card-header>
                                 <div mat-card-avatar class="success-header-image"></div>
-                                <mat-card-title>Success</mat-card-title>
-                                <mat-card-subtitle>Rs. 499</mat-card-subtitle>
+                                <mat-card-title>Payment Successful</mat-card-title>
                             </mat-card-header>
                             <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
                                 alt="Photo of a Shiba Inu"> -->
@@ -98,24 +97,22 @@
                                     <ul class="list-group list-group-numbered">
                                         <li class="list-group-item d-flex justify-content-between align-items-start">
                                             <div class="ms-2 me-auto fw-bold">
-                                                <p>Mr. {{transactionDetails.payload.name}}</p>
-                                                <p>{{transactionDetails.payload.email}}</p>
-                                                <p>{{transactionDetails.payload.phone}}</p>
+                                                <p>Name: {{transactionDetails.payload.name}}</p>
+                                                <p>Email: {{transactionDetails.payload.email}}</p>
+                                                <p>Phone No.:{{transactionDetails.payload.phone}}</p>
                                                 <p>Ticket Id: {{transactionDetails.payload._id}}</p>
                                                 <p>Payment Id: {{transactionDetails.payload.paymentId}}</p>
                                                 <p>Total Amount : Rs. {{transactionDetails.payload.amount}}</p>
                                                 <p>Purchased At: {{transactionDetails.payload.createdAt}}</p>
-                                                <input [(ngModel)]="transactionDetails.payload.name">
                                             </div>
                                         </li>
                                     </ul>
                                 </mat-card-content>
                         </mat-card>
-                        <mat-card class="failed-card" *ngIf="false">
+                        <mat-card class="failed-card" *ngIf="!isPaymentSuccess">
                             <mat-card-header>
                                 <div mat-card-avatar class="success-header-image"></div>
                                 <mat-card-title>Booking Failed</mat-card-title>
-                                <mat-card-subtitle>Rs. 499</mat-card-subtitle>
                             </mat-card-header>
                             <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
                                 alt="Photo of a Shiba Inu"> -->
@@ -125,7 +122,7 @@
 
                         </mat-card>
                     </div>
-                    <button mat-button class="btn btn-secondary" (click)="goHome()">Back</button>
+                    <button mat-button class="btn btn-secondary" (click)="goHome()">Go To Home Page</button>
                 </div>
             </mat-step>
         </mat-stepper>

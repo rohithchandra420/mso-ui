@@ -33,6 +33,7 @@ export class ShopComponent implements OnInit {
   count: number;
   totalAmount: number;
   isPaymentSuccess: boolean;
+  isCaptured: boolean;
   transactionDetails;
   qrdata: string = "sampleData";
   ticketName: string;
@@ -51,6 +52,7 @@ export class ShopComponent implements OnInit {
 
   ngOnInit() {
     this.isPaymentSuccess = false;
+    this.isCaptured = false;
     this.transactionDetails = {
       status:'',
       payload: {}
@@ -118,6 +120,7 @@ export class ShopComponent implements OnInit {
   }
 
   createRazorpayOrder() {
+    this.isCaptured = false;
     const txnData = {
       name: this.checkOutForm.controls.userName.value,
       email: this.checkOutForm.controls.email.value,
@@ -148,6 +151,7 @@ export class ShopComponent implements OnInit {
       modal: {
         // We should prevent closing of the form when esc key is pressed.
         escape: false,
+        backdropclose: false,
       },
       notes: {
         // include notes if any
@@ -166,25 +170,30 @@ export class ShopComponent implements OnInit {
       //options.response = response;
       txnData.successData = response;
       txnData.shopCart = this.ticket.shopCart;
+      this.isCaptured = true;
       this.shopService.onCapturePayment(txnData)
         .subscribe((res: {status: string, payload: Ticket}) => {
           this.isPaymentSuccess = true;
           this.transactionDetails.status = res.status;
           this.transactionDetails.payload = res.payload;
           this.showTransactionMessage(this.transactionDetails);
-          this.isPaymentSuccess = true;
           this.myStepper.next();
         }, (error) => {
           this.isPaymentSuccess = false;
           console.log("ERROR!: ", error.error);
-          this.isPaymentSuccess = true;
           this.myStepper.next();
         });
       // call your backend api to verify payment signature & capture transaction
     });
+
+    //TODO: Func on DIsmiss 
     options.modal.ondismiss = (() => {
+      this.isPaymentSuccess = false;
+      
+      console.log("ERROR!: ");
       // handle the case when user closes the form while transaction is in progress
     });
+
     const rzp = new this.winRef.nativeWindow.Razorpay(options);
     rzp.open();
 
