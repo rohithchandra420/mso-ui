@@ -64,6 +64,7 @@ const appRoutes: Routes = [
 
 ];
 
+//add useHash
 @NgModule({
     imports: [        
         RouterModule.forRoot(appRoutes)
