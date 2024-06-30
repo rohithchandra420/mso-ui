@@ -1,37 +1,44 @@
-
 <div class="row col-lg-12">
 
+    <div class="col-lg-12 mb-2 banner-container">
+            <!-- <div class="banner-container">
 
-    <div class="row summary-container col-lg-12">
+            </div> -->
+        <img src="assets/vineeth-banner.jpeg" alt="">
+    </div>
+
+    <div class="row col-lg-12">
         <mat-stepper #stepper class="shop-stepper" [linear]="true" [orientation]="(stepperOrientation | async)!">
-            <mat-step [stepControl]="totalAmount" label="Fill out your name">
+            <mat-step [stepControl]="totalAmount" label="Grab you Tickets">
                 <div class="product-container">
                     <mat-card class="product-card" *ngFor="let product of productList">
-                        <mat-card-header>
-                            <div mat-card-avatar class="product-header-image"></div>
-                            <mat-card-title>{{product.name}}</mat-card-title>
-                            <mat-card-subtitle>Rs. {{product.price}}</mat-card-subtitle>
-                        </mat-card-header>
-                        <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
-                            alt="Photo of a Shiba Inu"> -->
-                        <mat-card-content>
-                            <p>{{product.description}}</p>
-                        </mat-card-content>
-                        <mat-card-actions align="end">
-                            <div class="add-button-container">
-                                <button mat-mini-fab (click)="removeProductFromCart(product)" color="accent"
-                                    aria-label="Example icon button with a plus one icon" [disabled]="product.count==0">
-                                    <mat-icon>remove</mat-icon>
-                                </button>
-                            </div>
-                            <input matInput type="text" [(ngModel)]="product.count">
-                            <div class="add-button-container">
-                                <button mat-mini-fab (click)="addProductToCart(product)" color="accent"
-                                    aria-label="Example icon button with a plus one icon">
-                                    <mat-icon>adds</mat-icon>
-                                </button>
-                            </div>
-                        </mat-card-actions>
+                        <div class="overlay">
+                            <mat-card-header>
+                                <div mat-card-avatar class="product-header-image"></div>
+                                <mat-card-title>{{product.name}}</mat-card-title>
+                                <mat-card-subtitle>&#x20b9; {{product.price}}</mat-card-subtitle>
+                            </mat-card-header>
+                            <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+                                alt="Photo of a Shiba Inu"> -->
+                            <mat-card-content>
+                                <p>{{product.description}}</p>
+                            </mat-card-content>
+                            <mat-card-actions align="end">
+                                <div class="add-button-container">
+                                    <button mat-mini-fab (click)="removeProductFromCart(product)" color="accent"
+                                        aria-label="Example icon button with a plus one icon" [disabled]="product.count==0">
+                                        <mat-icon>remove</mat-icon>
+                                    </button>
+                                </div>
+                                <input matInput type="text" [(ngModel)]="product.count">
+                                <div class="add-button-container">
+                                    <button mat-mini-fab (click)="addProductToCart(product)" color="accent"
+                                        aria-label="Example icon button with a plus one icon">
+                                        <mat-icon>adds</mat-icon>
+                                    </button>
+                                </div>
+                            </mat-card-actions>
+                        </div>                        
                     </mat-card>
                 </div>
                 <div>
@@ -59,29 +66,67 @@
                     </div>
                 </form>
             </mat-step>
-            <mat-step [completed]="isCaptured" label="Total Amount: {{totalAmount}}">
-                <form [formGroup]="paymentForm" (ngSubmit)="onSubmit()" class="payment-form">
-                    <ul class="list-group" *ngIf="ticket && ticket.shopCart.length >=1">
-                        <li class="" *ngFor="let prodItem of ticket.shopCart">
-                            <p>{{ prodItem.name }} - {{ prodItem.price }}</p>
-                        </li>
-                    </ul>
-                    <ul>
-                        <li> GST (18%):</li>
-                        <li> Total Amount : {{totalAmount}}</li>
-                    </ul>
-                    <br>
-                    <div>
-                        <button mat-button matStepperPrevious class="btn btn-secondary mso-mr-2">Back</button>
-                        <button mat-button class="btn btn-primary mso-mr-2" (click)="createRazorpayOrder()" [disabled]="totalAmount <= 0">Pay</button>
-                        <button mat-button matStepperNext class="btn btn-primary" [disabled]="!isCaptured">View Ticket</button>
+            <mat-step [completed]="isCaptured">
+                <ng-template matStepLabel>Total Amount: <b class="price-label">&#x20b9;
+                        {{totalAmount}}</b></ng-template>
+                <div class="row summary-step">
+                    <div class="col-lg-4 col-md-4 col-xs-12">
+                        <mat-card class="confirmation-card">
+                            <mat-card-header>
+                                <div mat-card-avatar class="confirmation-header-image"></div>
+                                <mat-card-title>Confirmation:</mat-card-title>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <!-- <ul class="list-group list-group-numbered">
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto fw-bold">
+                                            <p>Name: {{checkOutForm.value.name}}</p>
+                                            <p>Email: {{checkOutForm.value.email}}</p>
+                                            <p>Phone No.:{{checkOutForm.value.phone}}</p>
+                                        </div>
+                                        <ul class="list-group" *ngIf="ticket && ticket.shopCart.length >=1">
+                                            <li class="" *ngFor="let prodItem of ticket.shopCart">
+                                                <p>{{ prodItem.name }} - {{ prodItem.price }}</p>
+                                            </li>
+                                        </ul>
+                                        <ul>
+                                            <li> GST (18%):</li>
+                                            <li> Total Amount : {{totalAmount}}</li>
+                                        </ul>
+                                        <br>
+                                    </li>
+                                </ul> -->
+                                <div>
+                                    <p>Name: {{checkOutForm.value.userName}}</p>
+                                    <p>Email: {{checkOutForm.value.email}}</p>
+                                    <p>Phone No.:{{checkOutForm.value.phoneNumber}}</p>
+                                </div>
+                                <div *ngIf="ticket && ticket.shopCart.length >=1">
+                                    <div *ngFor="let prodItem of ticket.shopCart">
+                                        <p>{{ prodItem.name }} - &nbsp; <b>&#x20b9;{{ prodItem.price }} </b></p>
+                                    </div>                                    
+                                </div>
+                                <div>
+                                    <p>Total Amount : &nbsp; <b>&#x20b9;{{totalAmount}} </b></p>
+                                </div>
+                            </mat-card-content>
+                            <mat-card-footer class="confirmation-card-footer">
+                                <mat-chip-set aria-label="Chihuahua traits">
+                                    <button mat-button matStepperPrevious
+                                        class="btn btn-secondary mso-mr-2">Back</button>
+                                    <button mat-button class="btn btn-primary mso-mr-2" (click)="createRazorpayOrder()"
+                                        [disabled]="totalAmount <= 0">Pay</button>
+                                    <button mat-button matStepperNext class="btn btn-primary"
+                                        [disabled]="!isCaptured">View Ticket</button>
+                                </mat-chip-set>
+                            </mat-card-footer>
+                        </mat-card>
                     </div>
-                </form>
+                </div>
             </mat-step>
-            <mat-step [stepControl]="false">
-                <ng-template matStepLabel>Done</ng-template>
-                <p>You are now done.</p>
-                <div class="row summary-step" >
+            <mat-step>
+                <ng-template matStepLabel>Ticket</ng-template>
+                <div class="row summary-step">
                     <div class="col-lg-4 col-md-4 col-xs-12">
                         <mat-card class="success-card" *ngIf="isPaymentSuccess">
                             <mat-card-header>
@@ -90,24 +135,24 @@
                             </mat-card-header>
                             <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
                                 alt="Photo of a Shiba Inu"> -->
-                                <div class="qrcodeImage">
-                                    <qrcode [qrdata]="qrdata"></qrcode>
-                                </div>
-                                <mat-card-content>
-                                    <ul class="list-group list-group-numbered">
-                                        <li class="list-group-item d-flex justify-content-between align-items-start">
-                                            <div class="ms-2 me-auto fw-bold">
-                                                <p>Name: {{transactionDetails.payload.name}}</p>
-                                                <p>Email: {{transactionDetails.payload.email}}</p>
-                                                <p>Phone No.:{{transactionDetails.payload.phone}}</p>
-                                                <p>Ticket Id: {{transactionDetails.payload._id}}</p>
-                                                <p>Payment Id: {{transactionDetails.payload.paymentId}}</p>
-                                                <p>Total Amount : Rs. {{transactionDetails.payload.amount}}</p>
-                                                <p>Purchased At: {{transactionDetails.payload.createdAt}}</p>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </mat-card-content>
+                            <div class="qrcodeImage">
+                                <qrcode [qrdata]="qrdata"></qrcode>
+                            </div>
+                            <mat-card-content>
+                                <ul class="list-group list-group-numbered">
+                                    <li class="list-group-item d-flex justify-content-between align-items-start">
+                                        <div class="ms-2 me-auto fw-bold">
+                                            <p>Name: {{transactionDetails.payload.name}}</p>
+                                            <p>Email: {{transactionDetails.payload.email}}</p>
+                                            <p>Phone No.:{{transactionDetails.payload.phone}}</p>
+                                            <p>Ticket Id: {{transactionDetails.payload._id}}</p>
+                                            <p>Payment Id: {{transactionDetails.payload.paymentId}}</p>
+                                            <p>Total Amount : &#x20b9; {{transactionDetails.payload.amount}}</p>
+                                            <p>Purchased At: {{transactionDetails.payload.createdAt}}</p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </mat-card-content>
                         </mat-card>
                         <mat-card class="failed-card" *ngIf="!isPaymentSuccess">
                             <mat-card-header>
