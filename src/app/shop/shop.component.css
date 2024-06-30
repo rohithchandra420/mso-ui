@@ -41,7 +41,7 @@
 }
   
 .product-header-image {
-    background-image: url('https://raw.githubusercontent.com/rohithchandra420/mso-ui/main/src/assets/logo.png');
+    background-image: url('../../assets/logo.png');
     background-size: cover;
 }
 
@@ -71,7 +71,7 @@
 }
 
 .success-header-image {
-    background-image: url('https://raw.githubusercontent.com/rohithchandra420/mso-ui/main/src/assets/logo.png');
+    background-image: url('../../assets/logo.png');
     background-size: cover;
 }
 
