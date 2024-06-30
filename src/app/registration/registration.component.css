@@ -34,7 +34,7 @@ input.ng-invalid.ng-touched {
 }
   
 .product-header-image {
-    background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+    background-image: url('https://raw.githubusercontent.com/rohithchandra420/mso-ui/main/src/assets/logo.png');
     background-size: cover;
 }
 
