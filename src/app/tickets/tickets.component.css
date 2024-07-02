@@ -1,4 +1,8 @@
 /* Structure */
+.table-container {
+  overflow: scroll;
+}
+
 table {
   width: 100%;
 }

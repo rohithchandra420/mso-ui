@@ -51,27 +51,24 @@
     background: none;
 }
 
-/* .product-card {
+.product-card {
     position: relative;
     width: 100%;
-    height: 400px;
     margin-bottom: 15px;
     border: 2px solid orange;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(255, 153, 0, 0.2), 0 6px 20px 0 rgba(255, 153, 0, 0.19);
-    background-image: url(../../assets/vineeth-banner.jpeg);
-    background-size: cover;
-    background-position: center;
-} */
+    background-color: #000;
+}
 
-.product-card {
+/* .product-card {
     max-width: 100%;
     margin-bottom: 15px;
     border: 2px solid orange;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(255, 153, 0, 0.2), 0 6px 20px 0 rgba(255, 153, 0, 0.19);
     background-image: url(../../assets/vineeth-banner.jpeg);
-}
+} */
 
 .product-card mat-card-title {
     color: #fff;
