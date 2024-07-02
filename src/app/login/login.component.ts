@@ -68,9 +68,9 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.errorSub.unsubscribe();
   }
 
-  signUp() {
+  // signUp() {
     
-  }
+  // }
 
 
 }
