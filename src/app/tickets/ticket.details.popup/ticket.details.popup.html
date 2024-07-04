@@ -11,7 +11,7 @@
         <div class="shop-item-label">{{ prodItem.name }} - &#x20b9; {{ prodItem.price }}</div>
         <!-- <button mat-raised-button color="primary" (click)="onAdmit(prodItem)" [disabled]="prodItem.status != 'New'">Admit</button> -->
     </div>
-    <p>Purchased At: {{ticketDetails.createdAt}}</p>
+    <p>Purchased At: {{ticketDetails.createdAt | utcToLocalTime}}</p>
   <!-- <mat-form-field>
     <input matInput [(ngModel)]="ticketDetails.animal">
   </mat-form-field> -->

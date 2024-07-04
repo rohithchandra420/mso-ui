@@ -115,7 +115,7 @@
                                     <button mat-button matStepperPrevious
                                         class="btn btn-secondary mso-mr-2">Back</button>
                                     <button mat-button class="btn btn-primary mso-mr-2" (click)="createRazorpayOrder()"
-                                        [disabled]="totalAmount <= 0">Pay</button>
+                                        [disabled]="totalAmount <= 0 || isCaptured">Pay</button>
                                     <button mat-button matStepperNext class="btn btn-primary"
                                         [disabled]="!isCaptured">View Ticket</button>
                                 </mat-chip-set>
@@ -148,7 +148,7 @@
                                             <p>Ticket Id: {{transactionDetails.payload._id}}</p>
                                             <p>Payment Id: {{transactionDetails.payload.paymentId}}</p>
                                             <p>Total Amount : &#x20b9; {{transactionDetails.payload.amount}}</p>
-                                            <p>Purchased At: {{transactionDetails.payload.createdAt}}</p>
+                                            <p>Purchased At: {{transactionDetails.payload.createdAt | utcToLocalTime}}</p>
                                         </div>
                                     </li>
                                 </ul>

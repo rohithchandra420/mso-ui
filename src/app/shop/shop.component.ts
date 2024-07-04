@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
 import { ShopService } from './shop.service';
 import { Product } from '../core/product.model';
 import { Ticket } from '../core/ticket.model';
@@ -33,7 +33,7 @@ export class ShopComponent implements OnInit {
   count: number;
   totalAmount: number;
   isPaymentSuccess: boolean;
-  isCaptured: boolean;
+  isCaptured = false;
   transactionDetails;
   qrdata: string = "sampleData";
   ticketName: string;
@@ -44,7 +44,7 @@ export class ShopComponent implements OnInit {
 
   stepperOrientation: Observable<StepperOrientation>;
 
-  constructor(private router: Router, private shopService: ShopService, breakpointObserver: BreakpointObserver, private winRef: WindowRefService) {
+  constructor(private router: Router, private zone: NgZone, private shopService: ShopService, breakpointObserver: BreakpointObserver, private winRef: WindowRefService) {
     this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
       .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
@@ -52,13 +52,12 @@ export class ShopComponent implements OnInit {
 
   ngOnInit() {
     this.isPaymentSuccess = false;
-    this.isCaptured = false;
     this.transactionDetails = {
-      status:'',
+      status: '',
       payload: {}
     };
 
-    this.ticket = new Ticket("userName", "userEmail", 1234567890, "oid", 1, "New" ,new Date, "" , [],);
+    this.ticket = new Ticket("userName", "userEmail", 1234567890, "oid", 1, "New", new Date, "", [],);
 
     this.firstFormGroup = new FormGroup({
       'testInput': new FormControl(null, Validators.required),
@@ -162,34 +161,37 @@ export class ShopComponent implements OnInit {
       prefill: {
         "name": txnData.name,
         "email": txnData.email,
-        "contact": txnData.phone       
+        "contact": txnData.phone
       }
     };
 
     options.handler = ((response, error) => {
       //options.response = response;
-      txnData.successData = response;
-      txnData.shopCart = this.ticket.shopCart;
-      this.isCaptured = true;
-      this.shopService.onCapturePayment(txnData)
-        .subscribe((res: {status: string, payload: Ticket}) => {
-          this.isPaymentSuccess = true;
-          this.transactionDetails.status = res.status;
-          this.transactionDetails.payload = res.payload;
-          this.showTransactionMessage(this.transactionDetails);
-          this.myStepper.next();
-        }, (error) => {
-          this.isPaymentSuccess = false;
-          console.log("ERROR!: ", error.error);
-          this.myStepper.next();
-        });
+      this.zone.run(() => {
+        txnData.successData = response;
+        txnData.shopCart = this.ticket.shopCart;
+        this.isCaptured = true;
+        this.shopService.onCapturePayment(txnData)
+          .subscribe((res: { status: string, payload: Ticket }) => {
+            this.transactionDetails.status = res.status;
+            this.transactionDetails.payload = res.payload;
+            this.createQrCode(this.transactionDetails);
+            this.isPaymentSuccess = true;
+            this.myStepper.next();
+          }, (error) => {
+            this.isPaymentSuccess = false;
+            console.log("ERROR!: ", error.error);
+            this.myStepper.next();
+          });
+      })
+
       // call your backend api to verify payment signature & capture transaction
     });
 
     //TODO: Func on DIsmiss 
     options.modal.ondismiss = (() => {
       this.isPaymentSuccess = false;
-      
+
       console.log("ERROR!: ");
       // handle the case when user closes the form while transaction is in progress
     });
@@ -199,8 +201,8 @@ export class ShopComponent implements OnInit {
 
   }
 
-  showTransactionMessage (data) {
-    if(data || data.status == 'ok') {
+  createQrCode(data) {
+    if (data || data.status == 'ok') {
       let qrValues = {
         tid: data.payload._id,
         oid: data.payload.orderId,
@@ -210,8 +212,6 @@ export class ShopComponent implements OnInit {
     } else {
       console.log("transDetails Not Ok");
     }
-    this.transactionDetails.payload.email = data.payload.email;
-    console.log("transaction msg : ", data);
   }
 
   goHome() {

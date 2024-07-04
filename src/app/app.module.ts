@@ -43,6 +43,7 @@ import { QrScannerComponent } from './tickets/qrscanner-popup/qrscanner.componen
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import { UtcToLocalTime } from './pipes/utcToLocalTime.pipe';
 
 
 register();
@@ -64,7 +65,8 @@ LOAD_WASM().subscribe()
     TicketsComponent,
     TicketDetailsPopUp,
     SafePipe,
-    QrScannerComponent
+    QrScannerComponent,
+    UtcToLocalTime
   ],
   imports: [
     BrowserModule,

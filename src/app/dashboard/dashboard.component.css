@@ -50,6 +50,11 @@ section{
     object-fit: cover;
 }
 
+.main-banner {
+    height: 45vh; 
+    width: 100%;
+}
+
 .service .box-container{
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(27rem, 1fr));

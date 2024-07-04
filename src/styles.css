@@ -20,6 +20,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
     section{
         padding: 2rem;
     }
+
+    .main-banner {
+        height: 45vh;
+    }
 }
 
 @media (max-width:768px){
@@ -71,6 +75,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
     
     }
 
+    .main-banner {
+        height: 45vh;
+    }
+
 
 }
 
@@ -86,6 +94,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
 
     .contact form .inputBox input{
         width: 100%;
+    }
+
+    .main-banner {
+        height: 15vh !important;
     }
 }
 

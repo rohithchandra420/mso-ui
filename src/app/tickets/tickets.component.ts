@@ -15,7 +15,7 @@ import { QrScannerComponent } from './qrscanner-popup/qrscanner.component';
 })
 export class TicketsComponent implements OnInit{
 
-  displayedColumns: string[] = ['name', 'email', 'phone', 'ticketId', 'orderId', 'paymentId', 'amount'];
+  displayedColumns: string[] = ['name', 'email', 'phone', 'ticketId', 'orderId', 'paymentId', 'amount', 'createdAt'];
   dataSource;
   filterValue="";
 
