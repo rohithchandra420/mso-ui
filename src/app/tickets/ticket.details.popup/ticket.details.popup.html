@@ -1,6 +1,6 @@
 <h1 mat-dialog-title>Hi {{ticketDetails.name}}</h1>
-<div mat-dialog-content>
-    <p>Mr. {{ticketDetails.name}}</p>
+<div mat-dialog-content [hidden]="showTicket">
+    <p>{{ticketDetails.name}}</p>
     <p>{{ticketDetails.email}}</p>
     <p>{{ticketDetails.phone}}</p>
     <p>Ticket Id: {{ticketDetails._id}}</p>
@@ -16,8 +16,44 @@
     <input matInput [(ngModel)]="ticketDetails.animal">
   </mat-form-field> -->
 </div>
+
+<div #ticketCard class="col-lg-12 col-md-12 col-xs-12" [hidden]="!showTicket">
+  <mat-card class="success-card">
+      <mat-card-header>
+          <div mat-card-avatar class="success-header-image"></div>
+          <mat-card-title>Payment Successful</mat-card-title>
+      </mat-card-header>
+      <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+          alt="Photo of a Shiba Inu"> -->
+      <div class="qrcodeImage">
+          <qrcode [qrdata]="qrdata"></qrcode>
+      </div>
+      <mat-card-content>
+          <ul class="list-group list-group-numbered">
+              <li class="list-group-item d-flex justify-content-between align-items-start">
+                  <div class="ms-2 me-auto fw-bold">
+                      <p>Name: {{ticketDetails.name}}</p>
+                      <p>Email: {{ticketDetails.email}}</p>
+                      <p>Phone No.:{{ticketDetails.phone}}</p>
+                      <p>Ticket Id: {{ticketDetails._id}}</p>
+                      <p>Payment Id: {{ticketDetails.paymentId}}</p>
+                      <p>Total Amount : &#x20b9; {{ticketDetails.amount}}</p>
+                      <p>Purchased At: {{ticketDetails.createdAt | utcToLocalTime}}</p>
+                  </div>
+              </li>
+          </ul>
+      </mat-card-content>
+  </mat-card>
+</div>    
 <div mat-dialog-actions>
   <button mat-raised-button color="primary" (click)="onAdmit(ticketDetails)" [disabled]="ticketDetails.status != 'New'">Admit</button>
+  <button mat-raised-button color="primary" (click)="onShowTicket()">{{showTicket ? "View Details" : "Show Ticket"}}</button>
+  <button mat-raised-button color="primary" (click)="onDownloadTicket()" *ngIf="showTicket">Download Ticket</button>
   <button mat-button (click)="onNoClick()">Close</button>
   <!-- <button mat-button [mat-dialog-close]="ticketDetails.animal" cdkFocusInitial>Ok</button> -->
+</div>
+
+<div id="download">
+  <img #canvas src="">
+  <a #downloadLink href="" download=""></a>
 </div>

@@ -8,7 +8,7 @@
       position: absolute !important ;
       top: 20%;
     }
-  }
+}
 
 .shop-items {
     margin-bottom: 10px;
@@ -20,4 +20,32 @@
     display: flex;
     flex-flow: column;
     justify-content: space-evenly;
+}
+
+.success-card {
+  color: #fff;
+  background: #fff;
+  margin-bottom: 10px;
+  background: rgb(0, 126, 0);
+  border-radius: 15px;
+  box-shadow: 0 10px 10px 0 rgba(132, 248, 132, 0.2), 0 15px 30px 0 rgba(140, 255, 140, 0.19);
+}
+
+.success-card .list-group-item {
+  background: rgb(0, 126, 0);
+  color: #fff;
+  font-weight: 400;
+}
+
+.success-header-image {
+  background-image: url('../../../assets/logo.png');
+  background-size: cover;
+}
+
+.qrcodeImage {
+  padding-left: 20%;
+}
+
+#download {
+  display: none;
 }

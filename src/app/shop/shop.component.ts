@@ -1,4 +1,4 @@
-import { Component, NgZone, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { ShopService } from './shop.service';
 import { Product } from '../core/product.model';
 import { Ticket } from '../core/ticket.model';
@@ -13,6 +13,8 @@ import { WindowRefService } from '../window-ref.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment.development';
 
+import html2canvas from 'html2canvas';
+
 export class NgxQrCode {
   text: string;
 }
@@ -26,8 +28,12 @@ export class NgxQrCode {
 export class ShopComponent implements OnInit {
 
   @ViewChild('stepper') private myStepper: MatStepper;
-
+  @ViewChild('ticketCard') downloadContent: ElementRef<HTMLElement>;
+  @ViewChild('canvas') canvas: ElementRef;
+  @ViewChild('downloadLink') downloadLink: ElementRef;
+  
   productList: Product[];
+  order_id: string;
   ticket: Ticket;
   shopCartItems: [];
   count: number;
@@ -35,7 +41,7 @@ export class ShopComponent implements OnInit {
   isPaymentSuccess: boolean;
   isCaptured = false;
   transactionDetails;
-  qrdata: string = "sampleData";
+  qrdata: string = "mso";
   ticketName: string;
 
   checkOutForm: FormGroup;
@@ -44,7 +50,8 @@ export class ShopComponent implements OnInit {
 
   stepperOrientation: Observable<StepperOrientation>;
 
-  constructor(private router: Router, private zone: NgZone, private shopService: ShopService, breakpointObserver: BreakpointObserver, private winRef: WindowRefService) {
+  constructor(private router: Router, private zone: NgZone, private shopService: ShopService, 
+    breakpointObserver: BreakpointObserver, private winRef: WindowRefService) {
     this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
       .pipe(map(({ matches }) => (matches ? 'horizontal' : 'vertical')));
@@ -129,8 +136,8 @@ export class ShopComponent implements OnInit {
     this.shopService.onCreateRazorpayOrder(txnData)
       .subscribe(
         (res) => {
-          const order_id = res.order_id;
-          this.payWithRazor(order_id, txnData);
+          this.order_id = res.order_id;
+          this.payWithRazor(this.order_id, txnData);
         },
         (error) => {
           console.log("Error!: ", error);
@@ -143,7 +150,7 @@ export class ShopComponent implements OnInit {
       key: environment.RAZ_API_KEY,
       amount: txnData.amount * 100, // amount should be in paise format to display Rs 1255 without decimal point
       currency: 'INR',
-      name: 'rc_hellboy', // company name or product name
+      name: 'Make Some Ochha', // company name or product name
       description: '',  // product description
       image: '../../assets/logo.png', // company logo or product image
       order_id: orderId, // order_id created by you in backend
@@ -212,6 +219,15 @@ export class ShopComponent implements OnInit {
     } else {
       console.log("transDetails Not Ok");
     }
+  }
+
+  downloadTicket() {
+    html2canvas(this.downloadContent.nativeElement).then(canvas => {
+      this.canvas.nativeElement.src = canvas.toDataURL();
+      this.downloadLink.nativeElement.href = canvas.toDataURL('image/png');
+      this.downloadLink.nativeElement.download = 'makesomeocha-ticket.png';
+      this.downloadLink.nativeElement.click();
+    });
   }
 
   goHome() {

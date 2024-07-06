@@ -187,3 +187,7 @@ mat-card-actions input {
 .confirmation-card-footer {
     padding: 16px;
 }
+
+#download {
+    display: none;
+}

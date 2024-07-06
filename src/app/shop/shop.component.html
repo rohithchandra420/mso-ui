@@ -1,7 +1,7 @@
 <div class="row col-lg-12">
 
     <div class="col-lg-12 mb-2 banner-container">
-            <!-- <div class="banner-container">
+        <!-- <div class="banner-container">
 
             </div> -->
         <img src="assets/vineeth-banner.jpeg" alt="">
@@ -9,7 +9,7 @@
 
     <div class="row col-lg-12">
         <mat-stepper #stepper class="shop-stepper" [linear]="true" [orientation]="(stepperOrientation | async)!">
-            <mat-step [stepControl]="totalAmount" label="Grab you Tickets">
+            <mat-step [stepControl]="totalAmount" label="Grab Your Tickets">
                 <div class="product-container">
                     <mat-card class="product-card" *ngFor="let product of productList">
                         <div class="overlay">
@@ -26,7 +26,8 @@
                             <mat-card-actions align="end">
                                 <div class="add-button-container">
                                     <button mat-mini-fab (click)="removeProductFromCart(product)" color="accent"
-                                        aria-label="Example icon button with a plus one icon" [disabled]="product.count==0">
+                                        aria-label="Example icon button with a plus one icon"
+                                        [disabled]="product.count==0">
                                         <mat-icon>remove</mat-icon>
                                     </button>
                                 </div>
@@ -38,7 +39,7 @@
                                     </button>
                                 </div>
                             </mat-card-actions>
-                        </div>                        
+                        </div>
                     </mat-card>
                 </div>
                 <div>
@@ -104,7 +105,7 @@
                                 <div *ngIf="ticket && ticket.shopCart.length >=1">
                                     <div *ngFor="let prodItem of ticket.shopCart">
                                         <p>{{ prodItem.name }} - &nbsp; <b>&#x20b9;{{ prodItem.price }} </b></p>
-                                    </div>                                    
+                                    </div>
                                 </div>
                                 <div>
                                     <p>Total Amount : &nbsp; <b>&#x20b9;{{totalAmount}} </b></p>
@@ -127,7 +128,7 @@
             <mat-step>
                 <ng-template matStepLabel>Ticket</ng-template>
                 <div class="row summary-step">
-                    <div class="col-lg-4 col-md-4 col-xs-12">
+                    <div #ticketCard class="col-lg-4 col-md-4 col-xs-12">
                         <mat-card class="success-card" *ngIf="isPaymentSuccess">
                             <mat-card-header>
                                 <div mat-card-avatar class="success-header-image"></div>
@@ -148,7 +149,8 @@
                                             <p>Ticket Id: {{transactionDetails.payload._id}}</p>
                                             <p>Payment Id: {{transactionDetails.payload.paymentId}}</p>
                                             <p>Total Amount : &#x20b9; {{transactionDetails.payload.amount}}</p>
-                                            <p>Purchased At: {{transactionDetails.payload.createdAt | utcToLocalTime}}</p>
+                                            <p>Purchased At: {{transactionDetails.payload.createdAt | utcToLocalTime}}
+                                            </p>
                                         </div>
                                     </li>
                                 </ul>
@@ -162,15 +164,24 @@
                             <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
                                 alt="Photo of a Shiba Inu"> -->
                             <mat-card-content>
-                                <p>Notes</p>
+                                <p>Name: {{checkOutForm.value.userName}}</p>
+                                <p>Email: {{checkOutForm.value.email}}</p>
+                                <p>Phone No.:{{checkOutForm.value.phoneNumber}}</p>
+                                <p>OrderID: {{order_id}}</p>
                             </mat-card-content>
 
                         </mat-card>
                     </div>
+                    <button mat-button class="btn btn-primary" (click)="downloadTicket()">Download Ticket</button>
                     <button mat-button class="btn btn-secondary" (click)="goHome()">Go To Home Page</button>
                 </div>
             </mat-step>
         </mat-stepper>
+    </div>
+
+    <div id="download">
+        <img #canvas src="">
+        <a #downloadLink href="" download=""></a>
     </div>
 
 </div>
