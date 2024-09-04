@@ -32,4 +32,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## ##########################################################################################################
 
-Release 2.
+Release 2.0
+
+Test Branch
