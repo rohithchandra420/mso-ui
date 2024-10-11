@@ -231,7 +231,7 @@ export class ShopComponent implements OnInit {
   }
 
   goHome() {
-    this.router.navigate(['/dashboard'])
+    this.router.navigate(['/home'])
   }
 
 

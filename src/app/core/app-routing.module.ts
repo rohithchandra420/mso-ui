@@ -54,13 +54,18 @@ const appRoutes: Routes = [
     //         { path: 'register', component: RegistrationComponent }
     //     ]
     // },
-    { path: 'dashboard', component: DashboardComponent },
+    { path: 'home', component: HomeComponent},
+    { path: 'dashboard', component: DashboardComponent, children: [
+            { path: 'homeEdit', component: HomeComponent },
+            { path: 'register', component: RegistrationComponent},
+        ]
+    },
     { path: 'register', canActivate:[authGuard] , component: RegistrationComponent },
     { path: 'admin', canActivate:[authGuard] , component: AdminComponent },
     { path: 'shop', component: ShopComponent },
     { path: 'tickets', component: TicketsComponent },
     { path: 'error', component: ErrorPageComponent, data: {message: 'Page Under Construction'}},
-    { path: '**', redirectTo: '/dashboard' },
+    { path: '**', redirectTo: '/home' },
 
 ];
 

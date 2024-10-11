@@ -1,4 +1,4 @@
 export const environment = {
-    URL:'http://localhost:3000',
-    RAZ_API_KEY: 'rzp_test_l6SEVqW92jDyNY',
+    URL: 'https://mso-api.onrender.com',
+    RAZ_API_KEY: 'rzp_test_Z4zcmHgiJt5YeH'
 };

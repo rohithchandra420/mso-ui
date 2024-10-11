@@ -73,7 +73,7 @@ export class AuthService {
                 this.userLoggedInEmitter.next('response.')
                 //this.userLoggedInEmitter.next('AdminRole');
 
-                this.router.navigate(['dashboard']);
+                this.router.navigate(['home']);
             }, error => {
                 //debugger;
                 this.loggedIn = false;
@@ -110,7 +110,7 @@ export class AuthService {
         localStorage.setItem("IsLoggedIn", 'false');
         localStorage.removeItem('userData');
         this.user.next(null);
-        this.router.navigate(['/dashboard'])
+        this.router.navigate(['/home'])
     }
 
     private handleError(errorRes: HttpErrorResponse) {
