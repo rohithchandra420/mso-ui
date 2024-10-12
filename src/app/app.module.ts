@@ -21,11 +21,13 @@ import { ErrorPageComponent } from './error-page/error-page.component';
 import { AdminComponent } from './admin/admin.component';
 import { AuthInterceptorService } from './core/auth-interceptor.service';
 import { AlertComponent } from './alert/alert.component';
+import { ShopComponent } from './shop/shop.component';
+
+import { ShopService } from './shop/shop.service';
+import { HomeService } from './home/home.service';
 
 import { register } from 'swiper/element/bundle';
 import { SwiperDirective } from './directives/swiper.directive';
-import { ShopComponent } from './shop/shop.component';
-import { ShopService } from './shop/shop.service';
 import { MatButtonModule } from '@angular/material/button';
 import {MatStepperModule} from '@angular/material/stepper';
 import { WindowRefService } from './window-ref.service';
@@ -95,6 +97,7 @@ LOAD_WASM().subscribe()
     AuthGuard,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
     ShopService,
+    HomeService,
     WindowRefService,
     TicketsService  
   ],

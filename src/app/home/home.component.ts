@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { MousewheelEvents, NavigationEvents, PaginationEvents, SwiperOptions, A11yEvents } from 'swiper/types';
 import { User } from '../core/user.model';
+import { HomeService } from './home.service';
 
 @Component({
   selector: 'app-home',
@@ -14,9 +15,11 @@ export class HomeComponent implements OnInit {
   user: User;
   bannerImageList = [];
   isViewEdit = false;
-  bannerImg = [];
+  bannerImg = []; 
+  imageUrl: string | null = null; // Initialize as null
 
-  constructor(private route: ActivatedRoute, private router: Router) {
+  
+  constructor(private homeService:HomeService, private route: ActivatedRoute, private router: Router) {
 
   }
 
@@ -29,7 +32,9 @@ export class HomeComponent implements OnInit {
       _token: ''
     };
 
-    this.getBannerImages();
+    this.getAllImages();
+
+    
   }
 
   goToShopPage() {    
@@ -46,6 +51,7 @@ export class HomeComponent implements OnInit {
 
   getBannerImages() {
     this.bannerImageList.push("assets/slide1.png");
+    
   }
 
   editBannerImages() {
@@ -55,6 +61,27 @@ export class HomeComponent implements OnInit {
   updateBannerImages() {
     let newImgSrc = this.bannerImg;
     this.bannerImageList.push(...newImgSrc);
+  }
+
+  getAllImages() {
+    this.homeService.getAllImages().subscribe((res) => {
+      res.forEach(image => {
+        this.imageUrl = this.createImageFromBlob(new Uint8Array(image.image.data)); // Set image URL
+        this.bannerImageList.push(this.imageUrl);
+      });
+    })
+  }
+
+  getImageByName(imageName) {
+    this.homeService.getImageByName(imageName).subscribe((res) => {
+      this.imageUrl = this.createImageFromBlob(new Uint8Array(res.image.data)); // Set image URL
+      this.bannerImageList.push(this.imageUrl);
+    })
+  }
+
+  createImageFromBlob(imageData: Uint8Array): string {
+    const blob = new Blob([imageData], { type: 'image/jpeg' }); // Adjust the MIME type as necessary
+    return URL.createObjectURL(blob); // Create a URL for the blob
   }
 
 

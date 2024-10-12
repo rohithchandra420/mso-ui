@@ -356,4 +356,9 @@ section{
 .banner-form label {
     color: aqua;
 }
+
+.banner-form input {
+    width: 50%;
+    margin: 5px;
+}
   
