@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { MousewheelEvents, NavigationEvents, PaginationEvents, SwiperOptions, A11yEvents } from 'swiper/types';
-import { User } from '../core/user.model';
+import { User } from '../models/user.model';
 import { HomeService } from './home.service';
+import { ImageModel } from '../models/imageobj.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -12,14 +14,20 @@ import { HomeService } from './home.service';
 })
 
 export class HomeComponent implements OnInit {
-  user: User;
-  bannerImageList = [];
-  isViewEdit = false;
-  bannerImg = []; 
-  imageUrl: string | null = null; // Initialize as null
+  @Output() titleChange = new EventEmitter<string>();
 
-  
-  constructor(private homeService:HomeService, private route: ActivatedRoute, private router: Router) {
+  user: User;
+  currentRoute;
+  mainSlideImageList = [];
+  shopBannerImageList = [];
+  isViewEdit = false;
+  bannerImgObjList: ImageModel[] = [];
+  imageUrl: string | null = null; // Initialize as null
+  selected;
+
+
+  constructor(private homeService: HomeService, private route: ActivatedRoute, private router: Router,
+    private _snackBar: MatSnackBar) {
 
   }
 
@@ -32,12 +40,14 @@ export class HomeComponent implements OnInit {
       _token: ''
     };
 
+    this.titleChange.emit('Images  Upload');
+    this.currentRoute = this.route.snapshot.url.join('/');
     this.getAllImages();
 
-    
+
   }
 
-  goToShopPage() {    
+  goToShopPage() {
     this.router.navigate(['/shop'])
   }
 
@@ -45,37 +55,58 @@ export class HomeComponent implements OnInit {
     this.isViewEdit = !this.isViewEdit;
   }
 
-  addBannerImages() {
-    
-  }
-
-  getBannerImages() {
-    this.bannerImageList.push("assets/slide1.png");
-    
-  }
-
-  editBannerImages() {
-
-  }
-
   updateBannerImages() {
-    let newImgSrc = this.bannerImg;
-    this.bannerImageList.push(...newImgSrc);
+    // let newImgSrc = this.bannerImg;
+    // this.bannerImageList.push(...newImgSrc);
   }
+
+  onFileSelected(event, imageObj: ImageModel, i: number) {
+    console.log(event.target.files[0]);
+    this.bannerImgObjList[i].imageFile = event.target.files[0];
+    console.log(this.bannerImgObjList[i].imageFile.name);
+  }
+
+  uploadImage(imageData: ImageModel) {
+    console.log("Uplaod", imageData)
+    const formData = new FormData();
+    formData.append('name', imageData.name);
+    formData.append('description', imageData.description);
+    formData.append('imgTag', imageData.imgTag);
+    if (imageData.imageFile) {
+      formData.append('imageFile', imageData.imageFile, imageData.imageFile.name);
+    }
+
+    this.homeService.uploadImage(formData).subscribe((res) => {
+      this.openSnackBar("Image is Uploaded Successfully")
+    }, (error) => {
+      console.log("Upload Failed");
+      this.openSnackBar("Image Upload Failed");
+    })
+  }
+
+  addNewImageSpace() {
+    this.bannerImgObjList.push({ name: '', description: '', imgTag: '', imageFile: null });
+  }
+
 
   getAllImages() {
     this.homeService.getAllImages().subscribe((res) => {
+      this.bannerImgObjList = res;
       res.forEach(image => {
-        this.imageUrl = this.createImageFromBlob(new Uint8Array(image.image.data)); // Set image URL
-        this.bannerImageList.push(this.imageUrl);
+        this.imageUrl = this.createImageFromBlob(new Uint8Array(image.imageFile.data)); // Set image URL
+        if(image.imgTag == "mainSlideImage") {
+          this.mainSlideImageList.push(this.imageUrl);
+        } else if(image.imgTag == "shopBannerImage") {
+          this.shopBannerImageList.push(this.imageUrl);
+        }       
       });
     })
   }
 
   getImageByName(imageName) {
     this.homeService.getImageByName(imageName).subscribe((res) => {
-      this.imageUrl = this.createImageFromBlob(new Uint8Array(res.image.data)); // Set image URL
-      this.bannerImageList.push(this.imageUrl);
+      this.imageUrl = this.createImageFromBlob(new Uint8Array(res.imageFile.data)); // Set image URL
+      this.mainSlideImageList.push(this.imageUrl);
     })
   }
 
@@ -83,6 +114,25 @@ export class HomeComponent implements OnInit {
     const blob = new Blob([imageData], { type: 'image/jpeg' }); // Adjust the MIME type as necessary
     return URL.createObjectURL(blob); // Create a URL for the blob
   }
+
+  deleteImage(imageData: ImageModel, index: number) {
+    this.homeService.deleteImageByName(imageData.name).subscribe((res) => {
+      this.bannerImgObjList[index] = { name: '', description: '', imgTag: '', imageFile: null };
+      this.openSnackBar("Image is Deleted Successfully");
+
+    }, (error) => {
+      console.log(error);
+      this.openSnackBar("Deletion Failed");
+    })
+  }
+
+  openSnackBar(message) {
+    this._snackBar.open(message, 'Close', {
+      horizontalPosition: 'end',
+      verticalPosition: 'bottom',
+    });
+  }
+
 
 
 }

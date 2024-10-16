@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { map, catchError } from 'rxjs/operators';
 import { throwError } from 'rxjs';
 
-import { User } from '../core/user.model';
+import { User } from '../models/user.model';
 import { environment } from 'src/environments/environment.development';
 
 import { RegistrationService } from './registration.service'
-import { Product } from '../core/product.model';
+import { Product } from '../models/product.model';
 
 @Component({
   selector: 'app-registration',
@@ -17,7 +17,7 @@ import { Product } from '../core/product.model';
 })
 
 export class RegistrationComponent implements OnInit {
-
+  @Output() titleChange = new EventEmitter<string>();
   registerForm: FormGroup;
   genders = ['male', 'female'];
   productList: Product[] = [];
@@ -37,6 +37,7 @@ export class RegistrationComponent implements OnInit {
       'noOfTickets': new FormControl(null, [Validators.required, this.ticketValidator])
     });
 
+    this.titleChange.emit('Create Products');
     this.getAllProducts();
 
   }

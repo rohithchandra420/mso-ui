@@ -6,7 +6,6 @@
   <div class="mso-nav-long">
     <a mat-button class="active" routerLink="/home" *ngIf="isAuthenticated">Home</a>
     <a mat-button [routerLink]="['/dashboard']" *ngIf="isAuthenticated">Dashboard</a>
-    <a mat-button [routerLink]="['/register']" *ngIf="isAuthenticated">Register</a>
     <a mat-button [routerLink]="['/tickets']" *ngIf="isAuthenticated">Tickets</a>
     <a mat-button [routerLink]="['/admin']" *ngIf="userRole === 'admin'">Admin</a>
     <a mat-button class="active" routerLink="/login" *ngIf="false">Login</a>

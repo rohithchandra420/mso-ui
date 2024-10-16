@@ -55,12 +55,11 @@ const appRoutes: Routes = [
     //     ]
     // },
     { path: 'home', component: HomeComponent},
-    { path: 'dashboard', component: DashboardComponent, children: [
-            { path: 'homeEdit', component: HomeComponent },
+    { path: 'dashboard', canActivate:[authGuard] , component: DashboardComponent, children: [
+            { path: 'home-edit', component: HomeComponent },
             { path: 'register', component: RegistrationComponent},
         ]
     },
-    { path: 'register', canActivate:[authGuard] , component: RegistrationComponent },
     { path: 'admin', canActivate:[authGuard] , component: AdminComponent },
     { path: 'shop', component: ShopComponent },
     { path: 'tickets', component: TicketsComponent },

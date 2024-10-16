@@ -7,8 +7,6 @@ import { AppRoutingModule } from './core/app-routing.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
@@ -45,6 +43,9 @@ import { QrScannerComponent } from './tickets/qrscanner-popup/qrscanner.componen
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
+import {MatSelectModule} from '@angular/material/select';
+import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarModule, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
+
 import { UtcToLocalTime } from './pipes/utcToLocalTime.pipe';
 
 
@@ -78,7 +79,6 @@ LOAD_WASM().subscribe()
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatSnackBarModule,
     MatCardModule,
     MatButtonModule,
     MatStepperModule,
@@ -90,7 +90,9 @@ LOAD_WASM().subscribe()
     NgxScannerQrcodeModule,
     MatSidenavModule,
     MatListModule,
-    MatIconModule
+    MatIconModule,
+    MatSelectModule,
+    MatFormFieldModule, MatSelectModule, MatButtonModule, MatSnackBarModule
   ],
   providers: [
     AuthService,

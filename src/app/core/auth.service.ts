@@ -1,7 +1,7 @@
 //Service Used to call API to check the login Service at the backend
 
 import { Injectable } from "@angular/core";
-import { User } from "./user.model";
+import { User } from "../models/user.model";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { BehaviorSubject, Subject, catchError, pipe, tap, throwError } from "rxjs";
 import { Router } from "@angular/router";

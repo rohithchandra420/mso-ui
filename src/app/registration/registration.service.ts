@@ -1,15 +1,16 @@
 import { Injectable } from "@angular/core";
-import { Ticket } from "../core/ticket.model";
+import { Ticket } from "../models/ticket.model";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { User } from "../core/user.model";
+import { User } from "../models/user.model";
 import { AuthService } from "../core/auth.service";
 import { exhaustMap, take } from "rxjs";
-import { Product } from "../core/product.model";
+import { Product } from "../models/product.model";
 import { environment } from "src/environments/environment.development";
+import { ImplicitReceiver } from "@angular/compiler";
 
 @Injectable({ providedIn: 'root' })
 
-export class RegistrationService {
+export class RegistrationService{
     url = environment.URL;
 
     constructor(private http: HttpClient, private authService: AuthService) { }

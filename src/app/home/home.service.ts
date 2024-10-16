@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from "@angular/common/http";
 import { BehaviorSubject, Subject, catchError, pipe, tap, throwError } from "rxjs";
 import { environment } from "src/environments/environment.development";
-import { ImageModel } from "../core/imageobj.model"
+import { ImageModel } from "../models/imageobj.model"
 
 @Injectable()
 export class HomeService {
@@ -26,7 +26,16 @@ export class HomeService {
     }
 
     getAllImages() {
+        //const params = new HttpParams().set('type', "Main Slide Image");
         return this.http.get<[ImageModel]>(this.url + "/getAllImages");
+    }
+
+    uploadImage(imageData: FormData) {
+        return this.http.post(this.url + "/uploadImage", imageData);
+    }
+
+    deleteImageByName(imageName) {
+        return this.http.delete(this.url + "/deleteImageByName/" + imageName);
     }
 
 }

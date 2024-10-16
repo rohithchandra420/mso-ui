@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { User } from '../core/user.model';
+import { User } from '../models/user.model';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 

@@ -335,6 +335,7 @@ section{
 .home-edit {
     position: absolute;
     right: 0;
+    width: 150px;
 }
 
 
@@ -357,8 +358,28 @@ section{
     color: aqua;
 }
 
-.banner-form input {
-    width: 50%;
-    margin: 5px;
+.banner-form input, .banner-form select {
+    background-color: #000000;
+    color: #fff;
+    border: 1px solid orange;
+
+}
+
+.banner-form .btn-success, .banner-form .btn-danger {
+    font-size: inherit;
+}
+
+.btn-success {
+    background-color: green;
+    color: #fff;
+}
+
+.btn-danger {
+    background-color: red;
+    color: #fff;
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+    background-color: red !important;
 }
   

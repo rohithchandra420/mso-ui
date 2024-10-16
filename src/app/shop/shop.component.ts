@@ -1,8 +1,8 @@
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from '@angular/core';
 import { ShopService } from './shop.service';
-import { Product } from '../core/product.model';
-import { Ticket } from '../core/ticket.model';
-import { ShopcartItem } from '../core/shopcartItem.model';
+import { Product } from '../models/product.model';
+import { Ticket } from '../models/ticket.model';
+import { ShopcartItem } from '../models/shopcartItem.model';
 
 import { Observable } from 'rxjs';
 import { BreakpointObserver } from '@angular/cdk/layout';
@@ -43,6 +43,7 @@ export class ShopComponent implements OnInit {
   transactionDetails;
   qrdata: string = "mso";
   ticketName: string;
+  shopBannerImageUrl; // Initialize as null
 
   checkOutForm: FormGroup;
   paymentForm: FormGroup;
@@ -83,7 +84,7 @@ export class ShopComponent implements OnInit {
     this.loadProducts();
     this.count = 0;
     this.totalAmount = 0;
-    this.createTicket();
+    this.loadBannerImg();
   }
 
   mobileValidator(control: FormControl): { [s: string]: boolean } {
@@ -97,6 +98,19 @@ export class ShopComponent implements OnInit {
     this.shopService.getProductList().subscribe(res => {
       this.productList = res;
     });
+  }
+
+  loadBannerImg() {
+    this.shopService.getBannerImage().subscribe((res) => {
+      this.shopBannerImageUrl = this.createImageFromBlob(new Uint8Array(res[0].imageFile.data)); // Set image URL
+    }, (error) => {
+
+    });
+  }
+
+  createImageFromBlob(imageData: Uint8Array): string {
+    const blob = new Blob([imageData], { type: 'image/jpeg' }); // Adjust the MIME type as necessary
+    return URL.createObjectURL(blob); // Create a URL for the blob
   }
 
   addProductToCart(product: Product) {
@@ -116,10 +130,6 @@ export class ShopComponent implements OnInit {
     if (index > -1) {
       this.ticket.shopCart.splice(index, 1);
     }
-  }
-
-  createTicket() {
-    // this.ticket = new Ticket("testName", "testEmail@mso.com", 91, "testbookid", "testId", []);
   }
 
   onSubmit() {
