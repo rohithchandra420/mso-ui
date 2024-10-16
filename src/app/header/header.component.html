@@ -21,8 +21,8 @@
       <button mat-menu-item [routerLink]="['/tickets']" *ngIf="isAuthenticated">
         <span>Tickets</span>
       </button>
-      <button mat-menu-item [routerLink]="['/register']" *ngIf="isAuthenticated">
-        <span>Register</span>
+      <button mat-menu-item [routerLink]="['/dashboard']" *ngIf="isAuthenticated">
+        <span>Dashboard</span>
       </button>
       <button mat-menu-item [routerLink]="['/admin']" *ngIf="userRole === 'admin'">
         <span>Admin</span>

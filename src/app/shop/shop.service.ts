@@ -31,7 +31,6 @@ export class ShopService {
     }
 
     getBannerImage() {
-        debugger;
         const params = new HttpParams().set('type', "shopBannerImage");
         return this.http.get<ImageModel>(this.url + "/getAllImages", { params })
     }

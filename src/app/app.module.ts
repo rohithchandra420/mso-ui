@@ -47,6 +47,8 @@ import {MatSelectModule} from '@angular/material/select';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarModule, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 import { UtcToLocalTime } from './pipes/utcToLocalTime.pipe';
+import { ImageBoardComponent } from './image-board/image-board.component';
+import { ImageBoardService } from './image-board/image-board.service';
 
 
 register();
@@ -69,7 +71,8 @@ LOAD_WASM().subscribe()
     TicketDetailsPopUp,
     SafePipe,
     QrScannerComponent,
-    UtcToLocalTime
+    UtcToLocalTime,
+    ImageBoardComponent
   ],
   imports: [
     BrowserModule,
@@ -101,7 +104,8 @@ LOAD_WASM().subscribe()
     ShopService,
     HomeService,
     WindowRefService,
-    TicketsService  
+    TicketsService,
+    ImageBoardService  
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

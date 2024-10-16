@@ -23,7 +23,6 @@ export class HomeComponent implements OnInit {
   isViewEdit = false;
   bannerImgObjList: ImageModel[] = [];
   imageUrl: string | null = null; // Initialize as null
-  selected;
 
 
   constructor(private homeService: HomeService, private route: ActivatedRoute, private router: Router,

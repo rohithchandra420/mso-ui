@@ -13,6 +13,7 @@ import { AuthResolver } from "./auth-resolver.service";
 import { AdminComponent } from "../admin/admin.component";
 import { ShopComponent } from "../shop/shop.component";
 import { TicketsComponent } from "../tickets/tickets.component";
+import { ImageBoardComponent } from "../image-board/image-board.component";
 
 const profileGuard: CanActivateFn = (
     route: ActivatedRouteSnapshot,
@@ -56,7 +57,7 @@ const appRoutes: Routes = [
     // },
     { path: 'home', component: HomeComponent},
     { path: 'dashboard', canActivate:[authGuard] , component: DashboardComponent, children: [
-            { path: 'home-edit', component: HomeComponent },
+            { path: 'imageboard', component: ImageBoardComponent },
             { path: 'register', component: RegistrationComponent},
         ]
     },
