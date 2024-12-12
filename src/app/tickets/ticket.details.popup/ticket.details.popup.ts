@@ -1,6 +1,6 @@
 import { Component, ElementRef, Inject, OnInit, ViewChild } from "@angular/core";
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Ticket } from "src/app/core/ticket.model";
+import { Ticket } from "src/app/models/ticket.model";
 import { TicketsService } from "../tickets.service";
 
 import html2canvas from 'html2canvas';

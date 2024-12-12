@@ -1,0 +1,45 @@
+.home-edit {
+    position: absolute;
+    right: 0;
+    width: 150px;
+}
+
+.banner-form label {
+    color: aqua;
+}
+
+.banner-form input, .banner-form select {
+    background-color: #000000;
+    color: #fff;
+    border: 1px solid orange;
+
+}
+
+.banner-form .btn-success, .banner-form .btn-danger {
+    font-size: inherit;
+}
+
+.btn {
+    margin-top: 1rem;
+    display: inline-block;
+    padding: .8rem 3rem;
+    font-size: 1.7rem;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-success {
+    background-color: green;
+    color: #fff;
+}
+
+.btn-danger {
+    background-color: red;
+    color: #fff;
+}
+
+.mat-mdc-snack-bar-container .mdc-snackbar__surface {
+    background-color: red !important;
+}
+  

@@ -1,7 +1,7 @@
 //Service Used to call API to check the login Service at the backend
 
 import { Injectable } from "@angular/core";
-import { User } from "./user.model";
+import { User } from "../models/user.model";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { BehaviorSubject, Subject, catchError, pipe, tap, throwError } from "rxjs";
 import { Router } from "@angular/router";
@@ -73,7 +73,7 @@ export class AuthService {
                 this.userLoggedInEmitter.next('response.')
                 //this.userLoggedInEmitter.next('AdminRole');
 
-                this.router.navigate(['dashboard']);
+                this.router.navigate(['home']);
             }, error => {
                 //debugger;
                 this.loggedIn = false;
@@ -110,7 +110,7 @@ export class AuthService {
         localStorage.setItem("IsLoggedIn", 'false');
         localStorage.removeItem('userData');
         this.user.next(null);
-        this.router.navigate(['/dashboard'])
+        this.router.navigate(['/home'])
     }
 
     private handleError(errorRes: HttpErrorResponse) {

@@ -1,11 +1,11 @@
 <mat-toolbar color="primary" class="header">
   <img src="assets/logo.png" class="headlogo">
-  <a href="#" routerLink="/dashboard" class="logo"><span>MAKE SOME O</span>छा</a>
+  <a href="#" routerLink="/home" class="logo"><span>MAKE SOME O</span>छा</a>
 
   <div class="spacer"></div>
   <div class="mso-nav-long">
-    <a mat-button class="active" routerLink="/dashboard" *ngIf="isAuthenticated">Dashboard</a>
-    <a mat-button [routerLink]="['/register']" *ngIf="isAuthenticated">Register</a>
+    <a mat-button class="active" routerLink="/home" *ngIf="isAuthenticated">Home</a>
+    <a mat-button [routerLink]="['/dashboard']" *ngIf="isAuthenticated">Dashboard</a>
     <a mat-button [routerLink]="['/tickets']" *ngIf="isAuthenticated">Tickets</a>
     <a mat-button [routerLink]="['/admin']" *ngIf="userRole === 'admin'">Admin</a>
     <a mat-button class="active" routerLink="/login" *ngIf="false">Login</a>
@@ -21,8 +21,8 @@
       <button mat-menu-item [routerLink]="['/tickets']" *ngIf="isAuthenticated">
         <span>Tickets</span>
       </button>
-      <button mat-menu-item [routerLink]="['/register']" *ngIf="isAuthenticated">
-        <span>Register</span>
+      <button mat-menu-item [routerLink]="['/dashboard']" *ngIf="isAuthenticated">
+        <span>Dashboard</span>
       </button>
       <button mat-menu-item [routerLink]="['/admin']" *ngIf="userRole === 'admin'">
         <span>Admin</span>

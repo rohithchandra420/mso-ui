@@ -1,0 +1,39 @@
+<p>image-board works!</p>
+<div class="container">
+    <div class="banner-form col-sm-offset-1 col-md-offset-2">
+        <!-- <div class="banner-form"> -->
+            <div class="row col-12 mb-5" *ngFor="let bannerImage of bannerImgObjList; let i = index">
+                <div class="col-lg-3 col-md-3 col-xs-12 mb-2">
+                    <label>File:</label>
+                    <input type="file" *ngIf="!bannerImage.imageFile" (change)="onFileSelected($event, bannerImage, i)"
+                        class="form-control">
+                </div>
+                <div class="col-lg-2 col-md-3 col-xs-12 mb-2">
+                    <label>Name:</label>
+                    <input type="text" [(ngModel)]="bannerImage.name" class="form-control">
+                </div>
+                <div class="col-lg-2 col-md-3 col-xs-12 mb-2">
+                    <label>Description:</label>
+                    <input type="text" [(ngModel)]="bannerImage.description" class="form-control">
+                </div>
+                <div class="col-lg-2 col-md-3 col-xs-12 mb-2">
+                    <label>Image Tag:</label>
+                    <select [(ngModel)]="bannerImage.imgTag" class="form-control">
+                        <option value="" disabled>Select Image Tag</option>
+                        <option value="mainSlideImage">Main Slide Image</option>
+                        <option value="shopBannerImage">Shop Banner Image</option>
+                    </select>
+                </div>
+    
+                <div class="col-auto mb-2">
+                    <button class="btn btn-danger" (click)="deleteImage(bannerImage, i)">Delete</button>
+                </div>
+                <div class="col-auto mb-2">
+                    <button class="btn btn-success" (click)="uploadImage(bannerImage)">Upload</button>
+                </div>
+            </div>
+            <br>
+            <button class="btn btn-primary" type="button" (click)="addNewImageSpace()">Add New Image</button>
+        <!-- </div> -->
+    </div>
+</div>

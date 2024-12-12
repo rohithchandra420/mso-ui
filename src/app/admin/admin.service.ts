@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Workshop } from "../core/workshop.model";
+import { Workshop } from "../models/workshop.model";
 import { Injectable } from "@angular/core";
 
 @Injectable({ providedIn: 'root' })

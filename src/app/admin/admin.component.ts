@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Workshop } from '../core/workshop.model';
+import { Workshop } from '../models/workshop.model';
 import { AdminService } from './admin.service';
 
 @Component({

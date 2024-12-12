@@ -2,9 +2,10 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from "@angular/common/http";
 import { BehaviorSubject, Subject, catchError, pipe, tap, throwError } from "rxjs";
 import { Router } from "@angular/router";
-import { Product } from "../core/product.model";
-import { Ticket } from "../core/ticket.model";
+import { Product } from "../models/product.model";
+import { Ticket } from "../models/ticket.model";
 import { environment } from "src/environments/environment.development";
+import { ImageModel } from "../models/imageobj.model";
 
 @Injectable()
 export class ShopService {
@@ -27,6 +28,11 @@ export class ShopService {
         //     new Product("testID4", "Test Name 04", "testTitle4", 899, "Test Description", true, 8),   
         // ];
 
+    }
+
+    getBannerImage() {
+        const params = new HttpParams().set('type', "shopBannerImage");
+        return this.http.get<ImageModel>(this.url + "/getAllImages", { params })
     }
 
     onCreateRazorpayOrder(orderData) {

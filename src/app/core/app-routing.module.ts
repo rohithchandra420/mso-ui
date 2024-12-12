@@ -13,6 +13,7 @@ import { AuthResolver } from "./auth-resolver.service";
 import { AdminComponent } from "../admin/admin.component";
 import { ShopComponent } from "../shop/shop.component";
 import { TicketsComponent } from "../tickets/tickets.component";
+import { ImageBoardComponent } from "../image-board/image-board.component";
 
 const profileGuard: CanActivateFn = (
     route: ActivatedRouteSnapshot,
@@ -54,13 +55,17 @@ const appRoutes: Routes = [
     //         { path: 'register', component: RegistrationComponent }
     //     ]
     // },
-    { path: 'dashboard', component: DashboardComponent },
-    { path: 'register', canActivate:[authGuard] , component: RegistrationComponent },
+    { path: 'home', component: HomeComponent},
+    { path: 'dashboard', canActivate:[authGuard] , component: DashboardComponent, children: [
+            { path: 'imageboard', component: ImageBoardComponent },
+            { path: 'register', component: RegistrationComponent},
+        ]
+    },
     { path: 'admin', canActivate:[authGuard] , component: AdminComponent },
     { path: 'shop', component: ShopComponent },
     { path: 'tickets', component: TicketsComponent },
     { path: 'error', component: ErrorPageComponent, data: {message: 'Page Under Construction'}},
-    { path: '**', redirectTo: '/dashboard' },
+    { path: '**', redirectTo: '/home' },
 
 ];
 
