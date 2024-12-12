@@ -89,17 +89,38 @@ export class HomeComponent implements OnInit {
 
 
   getAllImages() {
+    let allImages = this.retriveImagesFromLocal();
+    if(allImages && allImages.length)
+    {
+      this.processImages(allImages);
+    }    
     this.homeService.getAllImages().subscribe((res) => {
-      this.bannerImgObjList = res;
-      res.forEach(image => {
-        this.imageUrl = this.createImageFromBlob(new Uint8Array(image.imageFile.data)); // Set image URL
-        if(image.imgTag == "mainSlideImage") {
-          this.mainSlideImageList.push(this.imageUrl);
-        } else if(image.imgTag == "shopBannerImage") {
-          this.shopBannerImageList.push(this.imageUrl);
-        }       
-      });
+      this.storeImagesInLocal(res);
+      this.processImages(res);
     })
+  }
+
+  processImages(data) {
+    this.mainSlideImageList = []
+    this.shopBannerImageList = [];
+    this.bannerImgObjList = data;
+    data.forEach(image => {
+      this.imageUrl = this.createImageFromBlob(new Uint8Array(image.imageFile.data)); // Set image URL
+      if (image.imgTag == "mainSlideImage") {
+        this.mainSlideImageList.push(this.imageUrl);
+      } else if (image.imgTag == "shopBannerImage") {
+        this.shopBannerImageList.push(this.imageUrl);
+      }
+    });
+  }
+
+  storeImagesInLocal(data) {
+    localStorage.removeItem("msoImages");
+    localStorage.setItem("msoImages", JSON.stringify(data));
+  }
+
+  retriveImagesFromLocal() {
+    return JSON.parse(localStorage.getItem("msoImages"));
   }
 
   getImageByName(imageName) {
