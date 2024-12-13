@@ -51,6 +51,19 @@
     background: none;
 }
 
+.button-container {
+    margin-left: 10px;
+    /* Space between the input and the button */
+    display: flex;
+    justify-content: flex-end;
+    /* Align button to the right */
+}
+
+.filter-btn {
+    margin-left: 10px;
+}
+
+
 .product-card {
     position: relative;
     width: 100%;

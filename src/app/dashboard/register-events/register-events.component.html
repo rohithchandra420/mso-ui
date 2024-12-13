@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="col-xs-12 col-sm-12 col-md-8 col-sm-offset-1 col-md-offset-2">
+        <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="registration-form">
+            <div class="form-group">
+                <label for="eventName">Event Name:</label>
+                <input type="text" id="eventName" formControlName="eventName" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="description">Description:</label>
+                <input type="text" id="description" formControlName="description" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="imgFile">Image File:</label>
+                <input type="file" id="imgFile" formControlName="imgFile" (change)="onFileSelected($event)"
+                    class="form-control">
+            </div>
+            <br>
+            <button class="btn btn-primary" type="submit">Submit</button>
+        </form>
+    </div>
+    <div *ngIf="eventList.length >=1" class=" row col-lg-12 col-sm-offset-1 col-md-offset-2 p-5">
+        <mat-card class="event-card col-12 mr-2" *ngFor="let event of eventList">
+            <!-- [ngStyle]="{'background-image': 'url(' + createImageFromBlob(event.imageFile) + ')', 'background-size': 'cover', 'background-position': 'center'}"> -->
+
+            <div class="card-background"
+                [ngStyle]="{'background-image': 'url(' + event.imageUrl + ')'}">
+            </div>
+            <mat-card-header>
+                <div mat-card-avatar class="event-header-image"></div>
+                <mat-card-title>{{event.name}}</mat-card-title>
+            </mat-card-header>
+            <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
+                    alt="Photo of a Shiba Inu"> -->
+            <mat-card-content>
+                <p>{{event.description}}</p>
+            </mat-card-content>
+            <mat-card-actions align="end">
+                <button class="btn btn-secondary mr-2" (click)="onEdit()">Edit</button>
+                <button class="btn btn-danger" (click)="onDelete(event._id)">Delete</button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</div>

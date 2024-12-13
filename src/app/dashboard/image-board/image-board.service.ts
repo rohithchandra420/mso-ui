@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from "@angular/common/http";
 import { BehaviorSubject, Subject, catchError, pipe, tap, throwError } from "rxjs";
 import { environment } from "src/environments/environment.development";
-import { ImageModel } from "../models/imageobj.model"
+import { ImageModel } from "../../models/imageobj.model"
 
 @Injectable()
 export class ImageBoardService {

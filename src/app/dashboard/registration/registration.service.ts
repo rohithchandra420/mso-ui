@@ -1,12 +1,13 @@
 import { Injectable } from "@angular/core";
-import { Ticket } from "../models/ticket.model";
+import { Ticket } from "../../models/ticket.model";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { User } from "../models/user.model";
-import { AuthService } from "../core/auth.service";
+import { User } from "../../models/user.model";
+import { AuthService } from "../../core/auth.service";
 import { exhaustMap, take } from "rxjs";
-import { Product } from "../models/product.model";
+import { Product } from "../../models/product.model";
 import { environment } from "src/environments/environment.development";
 import { ImplicitReceiver } from "@angular/compiler";
+import { MsoEvent } from "src/app/models/mso-event.model";
 
 @Injectable({ providedIn: 'root' })
 
@@ -14,6 +15,10 @@ export class RegistrationService{
     url = environment.URL;
 
     constructor(private http: HttpClient, private authService: AuthService) { }
+
+    getAllEventDetails() {
+        return this.http.get<[MsoEvent]>(this.url + "/getAllEventDetails");
+    }
 
     addProduct(productDetials: Product) {
         return this.http

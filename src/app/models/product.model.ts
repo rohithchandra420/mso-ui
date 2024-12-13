@@ -1,4 +1,7 @@
+import { MsoEvent } from "./mso-event.model";
+
 export class Product {
+    public msoEvent: MsoEvent;
     public name: string;
     public price: number;
     public description: string;
@@ -7,7 +10,8 @@ export class Product {
     public _id?: string;
     public count?: number;
 
-    constructor(name:string, price:number, description:string, active: boolean, remainingCount:number, _id?:string,  count?:number) {
+    constructor(msoEvent:MsoEvent, name:string, price:number, description:string, active: boolean, remainingCount:number, _id?:string,  count?:number) {
+        this.msoEvent = msoEvent;
         this._id = _id;
         this.active = active;
         this.description = description;

@@ -1,7 +1,14 @@
-<p>registration works!</p>
 <div class="container">
     <div class="col-xs-12 col-sm-12 col-md-8 col-sm-offset-1 col-md-offset-2">
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="registration-form">
+            <div class="form-group">
+                <label for="eventObj">Event Name:</label>
+                <select id="eventObj" formControlName="eventObj" class="form-control" [compareWith]="compareFn">       
+                    <option *ngFor="let event of eventOptions" [ngValue]="event">
+                        {{ event.name }}
+                      </option>             
+                </select>
+            </div>
             <div class="form-group">
                 <label for="userName">Name:</label>
                 <input type="text" id="userName" formControlName="userName" class="form-control">
@@ -26,10 +33,25 @@
         </form>
     </div>
     <div *ngIf="productList.length >=1" class=" row col-lg-12 col-sm-offset-1 col-md-offset-2 p-5">
-        <mat-card class="product-card col-lg-3 col-md-12 col-xs-12 mr-2" *ngFor="let product of productList">
+
+        <div class="col-12 button-group-container mb-3">
+            <button *ngFor="let filter of filters" mat-raised-button class="filter-btn"
+                [color]="selectedFilter === filter ? 'primary' : ''" (click)="toggleFilter(filter)">
+                {{ filter }}
+            </button>
+            <!-- <div class="form-group">
+                <input type="text" [(ngModel)]="selectedFilter" class="form-control" placeholder="Search Tent No:">
+            </div> -->
+        </div>
+
+        <mat-card class="product-card col-lg-5 col-md-12 col-xs-12 mr-2" *ngFor="let product of filteredItems">
+            <div class="card-background"
+                [ngStyle]="{'background-image': 'url(' + product.imageUrl + ')'}">
+            </div>
             <mat-card-header>
                 <div mat-card-avatar class="product-header-image"></div>
                 <mat-card-title>{{product.name}}</mat-card-title>
+                <mat-card-subtitle>{{product.msoEvent.name}}</mat-card-subtitle>
                 <mat-card-subtitle>&#x20b9; {{product.price}}</mat-card-subtitle>
             </mat-card-header>
             <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"

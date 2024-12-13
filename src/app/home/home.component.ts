@@ -60,13 +60,10 @@ export class HomeComponent implements OnInit {
   }
 
   onFileSelected(event, imageObj: ImageModel, i: number) {
-    console.log(event.target.files[0]);
     this.bannerImgObjList[i].imageFile = event.target.files[0];
-    console.log(this.bannerImgObjList[i].imageFile.name);
   }
 
   uploadImage(imageData: ImageModel) {
-    console.log("Uplaod", imageData)
     const formData = new FormData();
     formData.append('name', imageData.name);
     formData.append('description', imageData.description);

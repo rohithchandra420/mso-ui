@@ -1,0 +1,54 @@
+.event-card {
+    max-width: 100%;
+    margin-bottom: 10px;
+    margin-right:10px;
+    border: 3px solid orange;
+    border-radius: 10px;
+    position: relative; /* Ensure child elements like background can be positioned */
+    overflow: hidden;   /* Clip any overflowing background */
+}
+
+mat-card-header, mat-card-content, mat-card-actions {
+    position: relative; /* Ensure content stays above the background */
+    z-index: 1;        /* Bring content to the front */
+    color: #fff;       /* Ensure text color contrasts the background */
+}
+
+.card-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0; /* Place the background behind the content */
+    background-size: cover;
+    background-position: center;
+    opacity: 0.4; /* Adjust the opacity to make text readable */
+}
+  
+.event-header-image {
+    background-image: url('https://raw.githubusercontent.com/rohithchandra420/mso-ui/main/src/assets/logo.png');
+    background-size: cover;
+}
+
+.event-card mat-card-content {
+    color: #fff;
+    font-size: medium;
+}
+
+.event-card .btn-danger {
+    background: red;;
+}
+
+.event-card .btn-secondary {
+    background: rgb(115, 93, 192);;
+}
+
+.event-card mat-card-title {
+    color: #fff;
+}
+
+.event-card mat-card-content {
+    word-wrap: break-word;
+}
+

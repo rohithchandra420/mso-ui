@@ -4,18 +4,28 @@
         <!-- <div class="banner-container">
 
             </div> -->
-        <img [src]="shopBannerImageUrl" alt="">
+        <!-- <img [src]="shopBannerImageUrl" alt=""> -->
+        <img src="assets/coming_soon_banner.png" alt="">
     </div>
 
     <div class="row col-lg-12">
         <mat-stepper #stepper class="shop-stepper" [linear]="true" [orientation]="(stepperOrientation | async)!">
             <mat-step [stepControl]="totalAmount" label="Grab Your Tickets">
                 <div class="product-container">
-                    <mat-card class="product-card" *ngFor="let product of productList">
+
+                    <div class="col-12 button-group-container mb-3">
+                        <button *ngFor="let filter of filters" mat-raised-button class="filter-btn"
+                            [color]="selectedFilter === filter ? 'primary' : ''" (click)="toggleFilter(filter)">
+                            {{ filter }}
+                        </button>
+                    </div>
+
+                    <mat-card class="product-card" *ngFor="let product of filteredItems">
                         <div class="overlay">
                             <mat-card-header>
                                 <div mat-card-avatar class="product-header-image"></div>
                                 <mat-card-title>{{product.name}}</mat-card-title>
+                                <mat-card-subtitle>{{product.msoEvent.name}}</mat-card-subtitle>
                                 <mat-card-subtitle>&#x20b9; {{product.price}}</mat-card-subtitle>
                             </mat-card-header>
                             <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"

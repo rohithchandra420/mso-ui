@@ -4,7 +4,7 @@ import { ActivatedRouteSnapshot, CanActivateChildFn, CanActivateFn, Router, Rout
 import { DashboardComponent } from "../dashboard/dashboard.component";
 import { HomeComponent } from "../home/home.component";
 import { LoginComponent } from "../login/login.component";
-import { RegistrationComponent } from "../registration/registration.component";
+import { RegistrationComponent } from "../dashboard/registration/registration.component";
 import { Observable } from "rxjs";
 import { AuthService } from "./auth.service";
 import { authGuard } from "./auth.guard";
@@ -13,7 +13,8 @@ import { AuthResolver } from "./auth-resolver.service";
 import { AdminComponent } from "../admin/admin.component";
 import { ShopComponent } from "../shop/shop.component";
 import { TicketsComponent } from "../tickets/tickets.component";
-import { ImageBoardComponent } from "../image-board/image-board.component";
+import { ImageBoardComponent } from "../dashboard/image-board/image-board.component";
+import { RegisterEventsComponent } from "../dashboard/register-events/register-events.component";
 
 const profileGuard: CanActivateFn = (
     route: ActivatedRouteSnapshot,
@@ -59,6 +60,7 @@ const appRoutes: Routes = [
     { path: 'dashboard', canActivate:[authGuard] , component: DashboardComponent, children: [
             { path: 'imageboard', component: ImageBoardComponent },
             { path: 'register', component: RegistrationComponent},
+            { path: 'events', component: RegisterEventsComponent}
         ]
     },
     { path: 'admin', canActivate:[authGuard] , component: AdminComponent },

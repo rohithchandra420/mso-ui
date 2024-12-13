@@ -32,7 +32,7 @@ export class ShopComponent implements OnInit {
   @ViewChild('canvas') canvas: ElementRef;
   @ViewChild('downloadLink') downloadLink: ElementRef;
   
-  productList: Product[];
+  productList: Product[] = [];
   order_id: string;
   ticket: Ticket;
   shopCartItems: [];
@@ -44,6 +44,9 @@ export class ShopComponent implements OnInit {
   qrdata: string = "mso";
   ticketName: string;
   shopBannerImageUrl; // Initialize as null
+  filters = [];
+  selectedFilter;
+  
 
   checkOutForm: FormGroup;
   paymentForm: FormGroup;
@@ -97,6 +100,7 @@ export class ShopComponent implements OnInit {
   loadProducts() {
     this.shopService.getProductList().subscribe(res => {
       this.productList = res;
+      this.getFilter();
     });
   }
 
@@ -242,6 +246,42 @@ export class ShopComponent implements OnInit {
 
   goHome() {
     this.router.navigate(['/home'])
+  }
+
+  getFilter() {
+    const categoriesSet = new Set(this.productList.map(product => product.msoEvent.name));
+    categoriesSet.forEach(itemName => {
+      this.filters.push(itemName);
+    })
+    this.selectedFilter = this.filters[0];
+  }
+
+  toggleFilter(filter) {
+    this.selectedFilter = filter; // Set the selected filter
+    this.ticket.shopCart = []; //Resets the shopcart on every filter change
+    this.productList.forEach((product) => {
+      product.count = 0;
+    })
+    this.totalAmount = 0;
+  }
+
+  get filteredItems() {
+    return this.selectedFilter === 'All'
+      ? this.productList
+      : this.productList.filter(item => {
+        // Match for tent_type or tent_no directly
+        const matches = item.msoEvent.name?.toLowerCase().includes(this.selectedFilter.toLowerCase());
+        // const matchesTentNo = item.tent_no?.toLowerCase().includes(this.selectedFilter.toLowerCase());
+
+        // Match for occupants' properties (name and order_id) if occupants exist
+        // const matchesOccupant = item.occupants?.some(occupant => 
+        //   occupant?.name?.toLowerCase().includes(this.selectedFilter.toLowerCase()) ||
+        //   (occupant?.order_id?.toString().includes(this.selectedFilter))
+        // );
+
+        // Return true if any of the properties match the filter
+        return matches;
+      });
   }
 
 

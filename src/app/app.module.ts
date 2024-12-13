@@ -11,7 +11,7 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
-import { RegistrationComponent } from './registration/registration.component';
+import { RegistrationComponent } from './dashboard/registration/registration.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AuthService } from './core/auth.service';
 import { AuthGuard } from './core/auth-guard.service';
@@ -47,8 +47,9 @@ import {MatSelectModule} from '@angular/material/select';
 import { MatSnackBar, MatSnackBarHorizontalPosition, MatSnackBarModule, MatSnackBarVerticalPosition } from '@angular/material/snack-bar';
 
 import { UtcToLocalTime } from './pipes/utcToLocalTime.pipe';
-import { ImageBoardComponent } from './image-board/image-board.component';
-import { ImageBoardService } from './image-board/image-board.service';
+import { ImageBoardComponent } from './dashboard/image-board/image-board.component';
+import { ImageBoardService } from './dashboard/image-board/image-board.service';
+import { RegisterEventsComponent } from './dashboard/register-events/register-events.component';
 
 
 register();
@@ -72,7 +73,8 @@ LOAD_WASM().subscribe()
     SafePipe,
     QrScannerComponent,
     UtcToLocalTime,
-    ImageBoardComponent
+    ImageBoardComponent,
+    RegisterEventsComponent
   ],
   imports: [
     BrowserModule,

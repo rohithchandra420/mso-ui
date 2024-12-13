@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ImageBoardService } from './image-board.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { ImageModel } from '../models/imageobj.model';
+import { ImageModel } from '../../models/imageobj.model';
 
 @Component({
   selector: 'app-image-board',
