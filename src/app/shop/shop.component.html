@@ -10,7 +10,7 @@
 
     <div class="row col-lg-12">
         <mat-stepper #stepper class="shop-stepper" [linear]="true" [orientation]="(stepperOrientation | async)!">
-            <mat-step [stepControl]="totalAmount" label="Grab Your Tickets">
+            <mat-step [completed]="totalAmount ? true : false" label="Grab Your Tickets">
                 <div class="product-container">
 
                     <div class="col-12 button-group-container mb-3">
@@ -82,7 +82,7 @@
                         {{totalAmount}}</b></ng-template>
                 <div class="row summary-step">
                     <div class="col-lg-4 col-md-4 col-xs-12">
-                        <mat-card class="confirmation-card">
+                        <mat-card class="confirmation-card" *ngIf="!loading">
                             <mat-card-header>
                                 <div mat-card-avatar class="confirmation-header-image"></div>
                                 <mat-card-title>Confirmation:</mat-card-title>
@@ -132,6 +132,11 @@
                                 </mat-chip-set>
                             </mat-card-footer>
                         </mat-card>
+
+                        <div class="spinner-container"  *ngIf="loading">
+                            <mat-spinner></mat-spinner>
+                            <label class="loading-label">Please wait while we create your ticket</label>
+                        </div>
                     </div>
                 </div>
             </mat-step>

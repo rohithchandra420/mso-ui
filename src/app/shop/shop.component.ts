@@ -9,6 +9,7 @@ import { BreakpointObserver } from '@angular/cdk/layout';
 import { map } from 'rxjs/operators';
 import { MatStepper, StepperOrientation } from '@angular/material/stepper';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { WindowRefService } from '../window-ref.service';
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment.development';
@@ -46,6 +47,7 @@ export class ShopComponent implements OnInit {
   shopBannerImageUrl; // Initialize as null
   filters = [];
   selectedFilter;
+  loading = false;
   
 
   checkOutForm: FormGroup;
@@ -141,6 +143,7 @@ export class ShopComponent implements OnInit {
 
   createRazorpayOrder() {
     this.isCaptured = false;
+    this.loading = true;
     const txnData = {
       name: this.checkOutForm.controls.userName.value,
       email: this.checkOutForm.controls.email.value,
@@ -199,6 +202,7 @@ export class ShopComponent implements OnInit {
             this.createQrCode(this.transactionDetails);
             this.isPaymentSuccess = true;
             this.myStepper.next();
+            this.loading = false;
           }, (error) => {
             this.isPaymentSuccess = false;
             console.log("ERROR!: ", error.error);

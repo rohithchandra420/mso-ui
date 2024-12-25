@@ -7,6 +7,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
 
 /* media queries */
 
+:root {
+    --mdc-circular-progress-active-indicator-color: #3498db !important; /* Default value */
+}
+
 @media (max-width:991px){
 
     html{
