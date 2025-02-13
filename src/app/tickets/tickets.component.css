@@ -1,4 +1,8 @@
 /* Structure */
+/* .ticket-container {
+  overflow: hidden;
+} */
+
 .table-container {
   overflow: scroll;
 }
@@ -25,3 +29,50 @@ table {
 .demo-row-is-clicked {
   font-weight: bold;
 }
+
+
+
+/* -----------------------------SCROLL BAR DESIGN STARTS---------------------------------------- */
+/* Basic Scrollbar Customization */
+::-webkit-scrollbar {
+  width: 8px; /* Adjust scrollbar width */
+  height: 8px; /* Adjust scrollbar height for horizontal scrollbars */
+}
+
+::-webkit-scrollbar-track {
+  background: #444; /* Background color of the scrollbar track */
+  border-radius: 10px; /* Optional: Rounded corners */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: blue; /* Scrollbar thumb color */
+  border-radius: 10px; /* Optional: Rounded corners for thumb */
+  border: 2px solid #f0f0f0; /* Padding around the thumb */
+}
+
+/* Hover Effect */
+::-webkit-scrollbar-thumb:hover {
+  background: #d95d10; /* Darker color when hovered */
+}
+
+/* For Firefox (Gecko-based browsers) */
+* {
+  scrollbar-width: thin; /* Sets scrollbar width to thin */
+  scrollbar-color: var(--color-primary) var(--bs-body-bg); /* Thumb color and track color */
+
+
+
+::-webkit-scrollbar{
+    width: 1rem;
+}
+
+::-webkit-scrollbar-track{
+    background: #444;
+}
+
+::-webkit-scrollbar-thumb{
+    background: #d95d10;
+    border-radius: 5rem;
+}
+}
+/* -----------------------------SCROLL BAR DESIGN ENDS---------------------------------------- */

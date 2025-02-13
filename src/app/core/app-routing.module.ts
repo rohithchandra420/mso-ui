@@ -15,6 +15,7 @@ import { ShopComponent } from "../shop/shop.component";
 import { TicketsComponent } from "../tickets/tickets.component";
 import { ImageBoardComponent } from "../dashboard/image-board/image-board.component";
 import { RegisterEventsComponent } from "../dashboard/register-events/register-events.component";
+import { TransactionDetailsComponent } from "../dashboard/transaction-details/transaction-details.component";
 
 const profileGuard: CanActivateFn = (
     route: ActivatedRouteSnapshot,
@@ -60,7 +61,8 @@ const appRoutes: Routes = [
     { path: 'dashboard', canActivate:[authGuard] , component: DashboardComponent, children: [
             { path: 'imageboard', component: ImageBoardComponent },
             { path: 'register', component: RegistrationComponent},
-            { path: 'events', component: RegisterEventsComponent}
+            { path: 'events', component: RegisterEventsComponent},
+            { path: 'transcations', component: TransactionDetailsComponent}
         ]
     },
     { path: 'admin', canActivate:[authGuard] , component: AdminComponent },

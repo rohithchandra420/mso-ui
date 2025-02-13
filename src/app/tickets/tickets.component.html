@@ -1,20 +1,36 @@
 <p style="color:#fff">tickets works!</p>
 
-<div class="col-lg-12">
-    
+<div class="col-lg-12 ticket-container">
+
 
     <div class="row col-lg-12">
+        <div class="col-lg-4 col-md-12 col-xs-12">
+            <mat-form-field>
+                <mat-label>Select Event</mat-label>
+                <mat-select [(ngModel)]="selectedEvent" (selectionChange)="onEventFilterChange($event)">
+                    <mat-option *ngFor="let event of eventOptions" [value]="event">
+                        {{ event.name }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>            
+        </div>
+        <div class="col-lg-3 col-md-3 col-xs-12">
+            <button mat-raised-button>Search</button>
+        </div>
+
+
         <div class="col-lg-9 col-md-9 col-xs-12">
             <mat-form-field>
                 <mat-label>Filter</mat-label>
-                <input matInput  [(ngModel)]="filterValue" (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+                <input matInput [(ngModel)]="filterValue" (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
             </mat-form-field>
         </div>
+
         <div class="col-lg-3 col-md-3 col-xs-12">
             <button class="btn btn-primary" (click)="openScanner()">Scan</button>
         </div>
     </div>
-    
+
 
     <div class="col-lg-12 table-container">
         <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -23,43 +39,43 @@
                 <th mat-header-cell *matHeaderCellDef> Sl No. </th>
                 <td mat-cell *matCellDef="let element"> {{element.position}} </td>
             </ng-container>
-    
+
             <!-- Name Column -->
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef> Name </th>
                 <td mat-cell *matCellDef="let element"> {{element.name}} </td>
             </ng-container>
-    
+
             <!-- Email Column -->
             <ng-container matColumnDef="email">
                 <th mat-header-cell *matHeaderCellDef> Email </th>
                 <td mat-cell *matCellDef="let element"> {{element.email}} </td>
             </ng-container>
-    
+
             <!-- Phone Column -->
             <ng-container matColumnDef="phone">
                 <th mat-header-cell *matHeaderCellDef> Phone </th>
                 <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
             </ng-container>
-    
+
             <!-- Ticket Id Column -->
             <ng-container matColumnDef="ticketId">
                 <th mat-header-cell *matHeaderCellDef> Ticket ID </th>
                 <td mat-cell *matCellDef="let element"> {{element._id}} </td>
             </ng-container>
-    
+
             <!-- Order Id Column -->
             <ng-container matColumnDef="orderId">
                 <th mat-header-cell *matHeaderCellDef> Order ID </th>
                 <td mat-cell *matCellDef="let element"> {{element.orderId}} </td>
             </ng-container>
-    
+
             <!-- Payment Id Column -->
             <ng-container matColumnDef="paymentId">
                 <th mat-header-cell *matHeaderCellDef> Payment ID </th>
                 <td mat-cell *matCellDef="let element"> {{element.paymentId}} </td>
             </ng-container>
-    
+
             <!-- Amount Column -->
             <ng-container matColumnDef="amount">
                 <th mat-header-cell *matHeaderCellDef> Amount </th>
@@ -71,14 +87,32 @@
                 <th mat-header-cell *matHeaderCellDef> Booked At </th>
                 <td mat-cell *matCellDef="let element"> {{element.createdAt | utcToLocalTime}} </td>
             </ng-container>
-    
+
+            <!-- Transaction Id Column -->
+            <ng-container matColumnDef="hasEmailSent">
+                <th mat-header-cell *matHeaderCellDef> Email Sent </th>
+                <td mat-cell *matCellDef="let element"> {{element.hasEmailSent}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <!-- <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell> -->
+                <th mat-header-cell *matHeaderCellDef> Actions </th>
+                <td mat-cell *matCellDef="let element; let i = index">
+                    <button class="btn btn-success" (click)="sendTicketEmail(element, i); $event.stopPropagation()"
+                        >Email Ticket</button>
+                </td>
+                <!-- <mat-cell *matCellDef="let row">
+                    <button mat-button (click)="sendEmail(row)">Edit</button>
+                </mat-cell> -->
+            </ng-container>
+
             <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
             <tr mat-row (click)="openTicketDetails(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
-    
+
             <!-- Row shown when there is no matching data. -->
             <tr class="mat-row" *matNoDataRow>
                 <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
             </tr>
         </table>
-    </div>    
+    </div>
 </div>

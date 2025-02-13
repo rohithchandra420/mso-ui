@@ -1,0 +1,111 @@
+<div class="container">
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-sm-offset-1 col-md-offset-2">
+        <mat-form-field class="filter-field">
+            <mat-label>Filter</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+        </mat-form-field>
+
+        <div class="col-lg-12 table-container">
+            
+
+            <table id="txnTable" mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                <!-- Position Column -->
+                <ng-container matColumnDef="position">
+                    <th mat-header-cell *matHeaderCellDef> Sl No. </th>
+                    <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                </ng-container>
+
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Name </th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+
+                <!-- Email Column -->
+                <ng-container matColumnDef="email">
+                    <th mat-header-cell *matHeaderCellDef> Email </th>
+                    <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+                </ng-container>
+
+                <!-- Phone Column -->
+                <ng-container matColumnDef="phone">
+                    <th mat-header-cell *matHeaderCellDef> Phone </th>
+                    <td mat-cell *matCellDef="let element"> {{element.phone}} </td>
+                </ng-container>
+
+                <!-- Order Id Column -->
+                <ng-container matColumnDef="orderId">
+                    <th mat-header-cell *matHeaderCellDef> Order ID </th>
+                    <td mat-cell *matCellDef="let element"> {{element.orderId}} </td>
+                </ng-container>
+
+                <!-- Payment Id Column -->
+                <ng-container matColumnDef="paymentId">
+                    <th mat-header-cell *matHeaderCellDef> Payment ID </th>
+                    <td mat-cell *matCellDef="let element"> {{element.paymentId}} </td>
+                </ng-container>
+
+                <!-- Amount Column -->
+                <ng-container matColumnDef="amount">
+                    <th mat-header-cell *matHeaderCellDef> Amount </th>
+                    <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
+                </ng-container>
+
+                <!-- Created At Column -->
+                <ng-container matColumnDef="createdAt">
+                    <th mat-header-cell *matHeaderCellDef> Booked At </th>
+                    <td mat-cell *matCellDef="let element"> {{element.createdAt | utcToLocalTime}} </td>
+                </ng-container>
+
+                <!-- <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef> Actions </th>
+                    <td mat-cell *matCellDef="let element; let i = index">
+                        <button class="btn btn-success" (click)="sendTicketEmail(element, i); $event.stopPropagation()"
+                            >Email Ticket</button>
+                    </td>
+                </ng-container> -->
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns;  sticky:true"></tr>
+                <tr mat-row (click)="editTransaction(row)" *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                <!-- Row shown when there is no matching data. -->
+                <tr class="mat-row" *matNoDataRow>
+                    <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-8 col-sm-offset-1 col-md-offset-2 mt-3">
+        <div class="registration-form">
+            <!-- <div class="form-group">
+                <label for="msoEvent">Event:</label>
+                <input type="text" id="msoEvent" [(ngModel)]="msoEvent" class="form-control">
+            </div> -->
+            <div class="form-group">
+                <label for="Name">Name:</label>
+                <input type="text" id="Name" [disabled]=true [(ngModel)]="name" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="email" id="email" [(ngModel)]="email" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="phoneNumber">Phone No:</label>
+                <input type="text" id="phoneNumber" [(ngModel)]="phone" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="orderId">Order Id:</label>
+                <input type="text" id="orderId" [(ngModel)]="orderId" [disabled]=true class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="paymentId">Payment Id:</label>
+                <input type="text" id="paymentId" [(ngModel)]="paymentId" class="form-control">
+            </div>
+            <br>
+            <button class="btn btn-primary" type="submit" (click)="completeTxn()" [disabled]="!paymentId || !email || !phone ">Create Ticket</button>
+        </div>
+    </div>
+
+</div>

@@ -20,6 +20,38 @@
     background: rgb(155, 184, 26);
 } */
 
+html,
+body {
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
+    /* Prevent extra scrollbar */
+}
+
+/* Set row height to full screen */
+.row {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    /* Full viewport height */
+    overflow: hidden;
+    /* Prevent scrolling on the parent */
+}
+
+/* Allow only mat-sidenav-content to scroll */
+.sidenav-container {
+    flex-grow: 1;
+    height: 100%;
+}
+
+mat-sidenav-content {
+    overflow-y: auto !important;
+    /* Enable scrolling only inside this */
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
 h1 {
     padding: 0 1rem;
 }
@@ -74,8 +106,6 @@ mat-sidenav {
 mat-sidenav-content {
     padding-top: 3.5rem;
     padding-left: 3.5rem;
-    overflow: auto;
-    height: 100vh;
 
     @media screen and (min-width: 601px) {
         padding-top: 4rem;
