@@ -50,9 +50,6 @@ import { UtcToLocalTime } from './pipes/utcToLocalTime.pipe';
 import { ImageBoardComponent } from './dashboard/image-board/image-board.component';
 import { ImageBoardService } from './dashboard/image-board/image-board.service';
 import { RegisterEventsComponent } from './dashboard/register-events/register-events.component';
-import { NotificationService } from './core/notification.service';
-import { TransactionDetailsComponent } from './dashboard/transaction-details/transaction-details.component';
-import { TransactionDetailsService } from './dashboard/transaction-details/transaction-details.service';
 
 
 register();
@@ -77,8 +74,7 @@ LOAD_WASM().subscribe()
     QrScannerComponent,
     UtcToLocalTime,
     ImageBoardComponent,
-    RegisterEventsComponent,
-    TransactionDetailsComponent
+    RegisterEventsComponent
   ],
   imports: [
     BrowserModule,
@@ -101,7 +97,7 @@ LOAD_WASM().subscribe()
     MatListModule,
     MatIconModule,
     MatSelectModule,
-    MatFormFieldModule, MatSelectModule, MatSnackBarModule
+    MatFormFieldModule, MatSelectModule, MatButtonModule, MatSnackBarModule
   ],
   providers: [
     AuthService,
@@ -111,9 +107,7 @@ LOAD_WASM().subscribe()
     HomeService,
     WindowRefService,
     TicketsService,
-    ImageBoardService,
-    NotificationService,
-    TransactionDetailsService, 
+    ImageBoardService  
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],

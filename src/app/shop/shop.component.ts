@@ -28,11 +28,11 @@ export class NgxQrCode {
 
 export class ShopComponent implements OnInit {
 
-  @ViewChild('stepper') private stepper: MatStepper;
+  @ViewChild('stepper') private myStepper: MatStepper;
   @ViewChild('ticketCard') downloadContent: ElementRef<HTMLElement>;
   @ViewChild('canvas') canvas: ElementRef;
   @ViewChild('downloadLink') downloadLink: ElementRef;
-
+  
   productList: Product[] = [];
   order_id: string;
   ticket: Ticket;
@@ -47,9 +47,8 @@ export class ShopComponent implements OnInit {
   shopBannerImageUrl; // Initialize as null
   filters = [];
   selectedFilter;
-  selectedEventId;
   loading = false;
-
+  
 
   checkOutForm: FormGroup;
   paymentForm: FormGroup;
@@ -57,7 +56,7 @@ export class ShopComponent implements OnInit {
 
   stepperOrientation: Observable<StepperOrientation>;
 
-  constructor(private router: Router, private zone: NgZone, private shopService: ShopService,
+  constructor(private router: Router, private zone: NgZone, private shopService: ShopService, 
     breakpointObserver: BreakpointObserver, private winRef: WindowRefService) {
     this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
@@ -71,7 +70,7 @@ export class ShopComponent implements OnInit {
       payload: {}
     };
 
-    this.ticket = new Ticket("userName", "userEmail", 1234567890, "oid", 1, "New", false, new Date, "", [],);
+    this.ticket = new Ticket("userName", "userEmail", 1234567890, "oid", 1, "New", new Date, "", [],);
 
     this.firstFormGroup = new FormGroup({
       'testInput': new FormControl(null, Validators.required),
@@ -101,11 +100,9 @@ export class ShopComponent implements OnInit {
   }
 
   loadProducts() {
-    this.loading = true;
     this.shopService.getProductList().subscribe(res => {
       this.productList = res;
       this.getFilter();
-      this.loading = false;
     });
   }
 
@@ -152,8 +149,6 @@ export class ShopComponent implements OnInit {
       email: this.checkOutForm.controls.email.value,
       phone: this.checkOutForm.controls.phoneNumber.value,
       amount: this.totalAmount,
-      shopCart: this.ticket.shopCart,
-      msoEvent: this.selectedEventId
     }
     this.shopService.onCreateRazorpayOrder(txnData)
       .subscribe(
@@ -199,7 +194,6 @@ export class ShopComponent implements OnInit {
       this.zone.run(() => {
         txnData.successData = response;
         txnData.shopCart = this.ticket.shopCart;
-        txnData.msoEvent = this.selectedEventId;
         this.isCaptured = true;
         this.shopService.onCapturePayment(txnData)
           .subscribe((res: { status: string, payload: Ticket }) => {
@@ -207,31 +201,24 @@ export class ShopComponent implements OnInit {
             this.transactionDetails.payload = res.payload;
             this.createQrCode(this.transactionDetails);
             this.isPaymentSuccess = true;
-            this.stepper.next();
+            this.myStepper.next();
             this.loading = false;
           }, (error) => {
-            this.loading = false;
-            this.isCaptured = true;
             this.isPaymentSuccess = false;
             console.log("ERROR!: ", error.error);
-            this.stepper.next();
+            this.myStepper.next();
           });
       })
 
       // call your backend api to verify payment signature & capture transaction
     });
 
-
+    //TODO: Func on DIsmiss 
     options.modal.ondismiss = (() => {
-      //TODO: Func on DIsmiss 
-      this.zone.run(() => {
-        this.loading = false;
-        this.isCaptured = true;
-        this.isPaymentSuccess = false;
-        this.stepper.next();
-        console.log("ERROR!: ");
-        // handle the case when user closes the form while transaction is in progress
-      })
+      this.isPaymentSuccess = false;
+
+      console.log("ERROR!: ");
+      // handle the case when user closes the form while transaction is in progress
     });
 
     const rzp = new this.winRef.nativeWindow.Razorpay(options);
@@ -266,18 +253,11 @@ export class ShopComponent implements OnInit {
   }
 
   getFilter() {
-    const eventNameSets = new Set(this.productList.map(product => product.msoEvent.name));
-    eventNameSets.forEach(itemName => {
+    const categoriesSet = new Set(this.productList.map(product => product.msoEvent.name));
+    categoriesSet.forEach(itemName => {
       this.filters.push(itemName);
     })
     this.selectedFilter = this.filters[0];
-    
-    const uniqueMsoEvents = Array.from(
-      new Map(this.productList.map(product => [product.msoEvent._id, product.msoEvent])).values()
-    );
-    const selectedEvent = uniqueMsoEvents.filter(event => event.name === this.selectedFilter); 
-    this.selectedEventId = selectedEvent[0]._id;
-    //this.selectedEventId = this.
   }
 
   toggleFilter(filter) {
@@ -290,16 +270,6 @@ export class ShopComponent implements OnInit {
   }
 
   get filteredItems() {
-    const uniqueMsoEvents = Array.from(
-      new Map(this.productList.map(product => [product.msoEvent._id, product.msoEvent])).values()
-    );
-    // eventSets.filter(event => {
-
-    // })
-    //this.selectedEventId =
-    const selectedEvent = uniqueMsoEvents.filter(event => event.name === this.selectedFilter); 
-    this.selectedEventId = selectedEvent[0]._id;
-
     return this.selectedFilter === 'All'
       ? this.productList
       : this.productList.filter(item => {
