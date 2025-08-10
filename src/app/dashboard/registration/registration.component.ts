@@ -139,6 +139,16 @@ export class RegistrationComponent implements OnInit {
       })
   }
 
+  onDeactivate(id) {
+    alert(id);
+    this.registrationService.changeProductStatusById(id).subscribe((res) => {
+      const product = res;
+      console.log(res);
+    }, (error) => {
+        console.log("Failed to Deactivate");
+    })
+  }
+
   getFilter() {
     this.filters = ["All"];
     const categoriesSet = new Set(this.productList.map(product => product.msoEvent.name));

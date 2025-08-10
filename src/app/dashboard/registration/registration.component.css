@@ -33,6 +33,16 @@ input.ng-invalid.ng-touched {
     /* Align button to the right */
 }
 
+.btn-green {
+    color:#fff;
+    background-color: rgb(75, 177, 89);
+} 
+
+.btn-red {
+    color:#fff;
+    background-color: rgb(201, 92, 92);
+}
+
 .filter-btn {
     margin-left: 10px;
 }

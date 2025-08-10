@@ -38,4 +38,8 @@ export class RegistrationService{
             responseType: 'json'
         });
     }
+
+    changeProductStatusById(productId: string) {
+        return this.http.post<Product>(this.url + "/changeProductStatusById/" + productId, "");
+    }
 }

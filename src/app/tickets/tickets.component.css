@@ -25,3 +25,8 @@ table {
 .demo-row-is-clicked {
   font-weight: bold;
 }
+
+.filter-btn {
+    margin-left: 10px;
+}
+

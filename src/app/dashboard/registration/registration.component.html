@@ -3,10 +3,10 @@
         <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="registration-form">
             <div class="form-group">
                 <label for="eventObj">Event Name:</label>
-                <select id="eventObj" formControlName="eventObj" class="form-control" [compareWith]="compareFn">       
+                <select id="eventObj" formControlName="eventObj" class="form-control" [compareWith]="compareFn">
                     <option *ngFor="let event of eventOptions" [ngValue]="event">
                         {{ event.name }}
-                      </option>             
+                    </option>
                 </select>
             </div>
             <div class="form-group">
@@ -45,24 +45,25 @@
         </div>
 
         <mat-card class="product-card col-lg-5 col-md-12 col-xs-12 mr-2" *ngFor="let product of filteredItems">
-            <div class="card-background"
-                [ngStyle]="{'background-image': 'url(' + product.imageUrl + ')'}">
+            <div class="card-background" [ngStyle]="{'background-image': 'url(' + product.imageUrl + ')'}">
             </div>
             <mat-card-header>
                 <div mat-card-avatar class="product-header-image"></div>
                 <mat-card-title>{{product.name}}</mat-card-title>
                 <mat-card-subtitle>{{product.msoEvent.name}}</mat-card-subtitle>
                 <mat-card-subtitle>&#x20b9; {{product.price}}</mat-card-subtitle>
+                <mat-card-subtitle>Status: {{product.active ? "Active" : "Inactive"}}</mat-card-subtitle>
             </mat-card-header>
             <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg"
                     alt="Photo of a Shiba Inu"> -->
             <mat-card-content>
                 <p>{{product.description}}</p>
             </mat-card-content>
-            <mat-card-actions align="end">
-                <button class="btn btn-secondary mr-2" (click)="onEdit()">Edit</button>
+            <mat-card-actions align="end" class="gap-3">
+                <button class="btn" [ngClass]="product.active ? 'btn-red' : 'btn-green' "
+                    (click)="onDeactivate(product._id)">{{product.active ? "Deactivate" : "Activate"}} </button>
                 <button class="btn btn-danger" (click)="onDelete(product._id)">Delete</button>
-                </mat-card-actions>
+            </mat-card-actions>
         </mat-card>
     </div>
 </div>
