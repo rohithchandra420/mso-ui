@@ -29,10 +29,14 @@
                 <span *ngIf="!registerForm.get('noOfTickets').valid && registerForm.get('noOfTickets').touched"
                     class="help-block">Minimum nomber of tickets should be 1</span>
             </div><br>
-            <button class="btn btn-primary" type="submit">Submit</button>
+            <div class="d-flex flex-lg-row flex-column gap-2">
+                <button *ngIf="!isEditMode" class="btn btn-primary" type="submit">Create Product</button>
+                <button *ngIf="isEditMode" class="btn btn-secondary" type="button" (click)="onUpdate()">Update Product</button>
+                <button class="btn btn-success" type="button" (click)="onResetForm()">Reset</button>
+            </div>
         </form>
     </div>
-    <div *ngIf="productList.length >=1" class=" row col-lg-12 col-sm-offset-1 col-md-offset-2 p-5">
+    <div *ngIf="productList.length >=1" class="products-borad row col-lg-12 col-sm-offset-1 col-md-offset-2 p-5">
 
         <div class="col-12 button-group-container mb-3">
             <button *ngFor="let filter of filters" mat-raised-button class="filter-btn"
@@ -44,7 +48,7 @@
             </div> -->
         </div>
 
-        <mat-card class="product-card col-lg-5 col-md-12 col-xs-12 mr-2" *ngFor="let product of filteredItems">
+        <mat-card class="product-card col-lg-12 col-md-12 col-xs-12 mr-2" *ngFor="let product of filteredItems">
             <div class="card-background" [ngStyle]="{'background-image': 'url(' + product.imageUrl + ')'}">
             </div>
             <mat-card-header>
@@ -59,10 +63,11 @@
             <mat-card-content>
                 <p>{{product.description}}</p>
             </mat-card-content>
-            <mat-card-actions align="end" class="gap-3">
-                <button class="btn" [ngClass]="product.active ? 'btn-red' : 'btn-green' "
+            <mat-card-actions class="d-flex flex-lg-row flex-column gap-2">
+                <button class="btn w-100 w-lg-auto" [ngClass]="product.active ? 'btn-red' : 'btn-green' "
                     (click)="onDeactivate(product._id)">{{product.active ? "Deactivate" : "Activate"}} </button>
-                <button class="btn btn-danger" (click)="onDelete(product._id)">Delete</button>
+                <button class="btn btn-secondary w-100 w-lg-auto" (click)="onEdit(product)">Edit Product</button>
+                <button class="btn btn-danger w-100 w-lg-auto" (click)="onDelete(product._id)">Delete</button>
             </mat-card-actions>
         </mat-card>
     </div>

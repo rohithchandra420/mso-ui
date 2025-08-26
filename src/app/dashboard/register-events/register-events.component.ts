@@ -14,6 +14,8 @@ export class RegisterEventsComponent implements OnInit {
   registerForm: FormGroup;
   imageFile;
   eventList: MsoEvent[] = [];
+  isEdit = false;
+  eventOnEdit: MsoEvent;
 
   constructor(private registerEventsService: RegisterEventsService) {
 
@@ -48,6 +50,14 @@ export class RegisterEventsComponent implements OnInit {
     console.log(this.imageFile);
   }
 
+  resetForm() {
+    this.registerForm.controls.eventName.reset();
+    this.registerForm.controls.description.reset();
+    this.registerForm.controls.imgFile.reset();
+    this.eventOnEdit = null;
+    this.isEdit = false;
+  }
+
   onSubmit() {
     const formData = new FormData();
     formData.append('name', this.registerForm.controls.eventName.value);
@@ -61,7 +71,30 @@ export class RegisterEventsComponent implements OnInit {
       const newEvent = { ...res, imageUrl: URL.createObjectURL(blob) };
       this.eventList.push(newEvent);
     }, (error) => {
-      console.log("Upload Failed");
+      console.log("Create Event Failed");
+    })
+  }
+
+  onEdit(event: MsoEvent) {
+    this.isEdit = true;
+    this.eventOnEdit = event;
+    console.log(event);
+    this.registerForm.controls.eventName.setValue(event.name);
+    this.registerForm.controls.description.setValue(event.description);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  updateEvent() {
+    const eventDetails = {
+      "_id": this.eventOnEdit._id, 
+      "name": this.registerForm.controls.eventName.value,
+      "description": this.registerForm.controls.description.value,
+    };
+    this.registerEventsService.editEvent(eventDetails).subscribe((res) => {
+      this.getAllEvents();
+      this.resetForm();
+    }, (error) => {
+      console.log("Update Event Failed");
     })
   }
 
@@ -82,8 +115,17 @@ export class RegisterEventsComponent implements OnInit {
     this.registerEventsService.deleteEventById(id)
       .subscribe(res => {
         this.getAllEvents();
+      }, (error) => {
+        console.log("Deletion Error: ", error)
+      })
+  }
+
+  onDeactivateEvent(event) {
+    alert(event);
+    this.registerEventsService.changeEventStatusById(event._id).subscribe((res) => {
+      this.getAllEvents();
     }, (error) => {
-      console.log("Deletion Error: ", error)
+      console.log("Failed to Deactivate");
     })
   }
 

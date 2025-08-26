@@ -12,7 +12,6 @@ input.ng-invalid.ng-touched {
 }
 
 .registration-form {
-    background-color: whitesmoke;
     padding: 20px;
 }
 
@@ -21,7 +20,7 @@ input.ng-invalid.ng-touched {
 }
 
 .registration-form label {
-    color: red;
+    color: #fff;
     font-size: medium;
 }
 
@@ -45,6 +44,11 @@ input.ng-invalid.ng-touched {
 
 .filter-btn {
     margin-left: 10px;
+}
+
+.products-borad {
+    max-height: 70vh;
+    overflow-y: auto;
 }
 
 
@@ -86,11 +90,15 @@ mat-card-header, mat-card-content, mat-card-actions {
     font-size: medium;
 }
 
+.btn-success {
+    background-color: green;
+}
+
 .product-card .btn-danger {
     background: red;;
 }
 
-.product-card .btn-secondary {
+.btn-secondary {
     background: rgb(115, 93, 192);;
 }
 

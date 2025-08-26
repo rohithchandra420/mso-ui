@@ -15,15 +15,18 @@
                     class="form-control">
             </div>
             <br>
-            <button class="btn btn-primary" type="submit">Submit</button>
+            <div class="d-flex flex-lg-row flex-column gap-2">
+                <button *ngIf="!isEdit" class="btn btn-primary" type="submit">Create Event</button>
+                <button *ngIf="isEdit" class="btn btn-secondary" (click)="updateEvent()" type="button" >Update Event</button>
+                <button class="btn btn-tertiary" (click)="resetForm()" type="button">Reset</button>
+            </div>
         </form>
     </div>
-    <div *ngIf="eventList.length >=1" class=" row col-lg-12 col-sm-offset-1 col-md-offset-2 p-5">
+    <div *ngIf="eventList.length >=1" class="row event-borad col-lg-12 col-sm-offset-1 col-md-offset-2 p-5 ">
         <mat-card class="event-card col-12 mr-2" *ngFor="let event of eventList">
             <!-- [ngStyle]="{'background-image': 'url(' + createImageFromBlob(event.imageFile) + ')', 'background-size': 'cover', 'background-position': 'center'}"> -->
 
-            <div class="card-background"
-                [ngStyle]="{'background-image': 'url(' + event.imageUrl + ')'}">
+            <div class="card-background" [ngStyle]="{'background-image': 'url(' + event.imageUrl + ')'}">
             </div>
             <mat-card-header>
                 <div mat-card-avatar class="event-header-image"></div>
@@ -34,9 +37,11 @@
             <mat-card-content>
                 <p>{{event.description}}</p>
             </mat-card-content>
-            <mat-card-actions align="end">
-                <button class="btn btn-secondary mr-2" (click)="onEdit()">Edit</button>
-                <button class="btn btn-danger" (click)="onDelete(event._id)">Delete</button>
+            <mat-card-actions class="d-flex flex-lg-row flex-column gap-2">
+                <button class="btn btn-secondary w-100 w-lg-auto" (click)="onEdit(event)">Edit</button>
+                <button class="btn w-100 w-lg-auto" [ngClass]="event.active ? 'btn-warning' : 'btn-green' "
+                    (click)="onDeactivateEvent(event)">{{event.active ? "Deactivate" : "Activate"}} </button>
+                <button class="btn btn-danger w-100 w-lg-auto" (click)="onDelete(event._id)">Delete</button>
             </mat-card-actions>
         </mat-card>
     </div>

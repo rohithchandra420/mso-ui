@@ -1,3 +1,9 @@
+.event-borad {
+    margin-top: 15px;
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
 .event-card {
     max-width: 100%;
     margin-bottom: 10px;
@@ -40,8 +46,22 @@ mat-card-header, mat-card-content, mat-card-actions {
     background: red;;
 }
 
-.event-card .btn-secondary {
+.event-card .btn-warning {
+    background: orange;;
+}
+
+.btn-green {
+    color:#fff;
+    background-color: rgb(75, 177, 89);
+} 
+
+
+.btn-secondary {
     background: rgb(115, 93, 192);;
+}
+
+.btn-tertiary {
+    background-color: darkgreen;
 }
 
 .event-card mat-card-title {

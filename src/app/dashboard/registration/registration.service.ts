@@ -20,9 +20,13 @@ export class RegistrationService{
         return this.http.get<[MsoEvent]>(this.url + "/getAllEventDetails");
     }
 
-    addProduct(productDetials: Product) {
+    addProduct(productDetails: Product) {
         return this.http
-            .post<Product>(this.url + "/addProduct", productDetials)
+            .post<Product>(this.url + "/addProduct", productDetails)
+    }
+
+    updateProduct(productDetails) {
+        return this.http.patch<Product>(this.url + "/updateProduct", productDetails)
     }
 
     getProductById(productId: string) {

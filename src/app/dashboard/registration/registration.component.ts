@@ -26,6 +26,8 @@ export class RegistrationComponent implements OnInit {
   userList: User[] = [];
   filters = ["All"];
   selectedFilter = 'All';
+  isEditMode = false;
+  productOnEdit: Product;
   
 
   url = environment.URL;
@@ -68,6 +70,11 @@ export class RegistrationComponent implements OnInit {
     return option1 && option2 ? option1._id === option2._id : option1 === option2;
   };
 
+  onResetForm () {
+    this.registerForm.reset();
+    this.isEditMode = false;
+  }
+
   onSubmit() {
     // console.log(this.registerForm);
     // console.log(this.registerForm.controls.userName.value);
@@ -93,6 +100,36 @@ export class RegistrationComponent implements OnInit {
     }, error => {
         console.log("Error: ", error);
     });
+  }
+
+  onEdit(product: Product) {
+    this.isEditMode = true;
+    this.productOnEdit = product;
+    console.log(product);
+    this.registerForm.setValue({
+      eventObj: product.msoEvent,
+      userName: product.name,
+      description: product.description,
+      price: product.price,
+      noOfTickets: product.remainingCount
+    })
+  }
+
+  onUpdate() {
+    const productDetails = {
+      "_id": this.productOnEdit._id,
+      "msoEvent": this.registerForm.controls.eventObj.value, 
+      "name": this.registerForm.controls.userName.value,
+      "description": this.registerForm.controls.description.value,
+      "price": this.registerForm.controls.price.value,
+      "noOfTickets": this.registerForm.controls.noOfTickets.value
+    };
+
+    this.registrationService.updateProduct(productDetails).subscribe((res) => {
+      this.getAllProducts();
+    }, (error) => {
+      console.log("Update Product Failed");
+    })
   }
 
   getAllProducts() {
@@ -142,8 +179,7 @@ export class RegistrationComponent implements OnInit {
   onDeactivate(id) {
     alert(id);
     this.registrationService.changeProductStatusById(id).subscribe((res) => {
-      const product = res;
-      console.log(res);
+    this.getAllProducts();
     }, (error) => {
         console.log("Failed to Deactivate");
     })

@@ -89,7 +89,7 @@ export class ShopComponent implements OnInit {
     this.loadProducts();
     this.count = 0;
     this.totalAmount = 0;
-    this.loadBannerImg();
+    //this.loadBannerImg();
   }
 
   mobileValidator(control: FormControl): { [s: string]: boolean } {
@@ -106,18 +106,18 @@ export class ShopComponent implements OnInit {
     });
   }
 
-  loadBannerImg() {
-    this.shopService.getBannerImage().subscribe((res) => {
-      this.shopBannerImageUrl = this.createImageFromBlob(new Uint8Array(res[0].imageFile.data)); // Set image URL
-    }, (error) => {
+  // loadBannerImg() {
+  //   this.shopService.getBannerImage().subscribe((res) => {
+  //     this.shopBannerImageUrl = this.createImageFromBlob(new Uint8Array(res[0].imageFile.data)); // Set image URL
+  //   }, (error) => {
 
-    });
-  }
+  //   });
+  // }
 
-  createImageFromBlob(imageData: Uint8Array): string {
-    const blob = new Blob([imageData], { type: 'image/jpeg' }); // Adjust the MIME type as necessary
-    return URL.createObjectURL(blob); // Create a URL for the blob
-  }
+  // createImageFromBlob(imageData: Uint8Array): string {
+  //   const blob = new Blob([imageData], { type: 'image/jpeg' }); // Adjust the MIME type as necessary
+  //   return URL.createObjectURL(blob); // Create a URL for the blob
+  // }
 
   addProductToCart(product: Product) {
     product.count++;

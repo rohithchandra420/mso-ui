@@ -18,7 +18,7 @@ export class ShopService {
     }
 
     getProductList() {
-        return this.http.get<[Product]>(this.url + "/getAllProducts");
+        return this.http.get<[Product]>(this.url + "/getAllProductsByActiveEvent");
 
 
         // this. productList = [
