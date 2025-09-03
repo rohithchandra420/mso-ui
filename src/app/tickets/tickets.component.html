@@ -3,20 +3,23 @@
 <div class="col-lg-12">
 
 
-    <div class="row col-lg-12">
-        <div class="col-lg-9 col-md-9 col-xs-12">
+    <div class="row col-lg-12 mb-4">
+        <div class="col-lg-8 col-md-8 col-xs-12">
             <mat-form-field>
                 <mat-label>Filter</mat-label>
                 <input matInput [(ngModel)]="filterValue" (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
             </mat-form-field>
         </div>
-        <div class="col-lg-3 col-md-3 col-xs-12">
+        <div class="col-lg-2 col-md-2 col-xs-12">
             <button class="btn btn-primary" (click)="openScanner()">Scan</button>
+        </div>
+        <div class="col-lg-2 col-md-2 col-xs-12">
+            <button class="btn btn-primary" (click)="exportData()">Export </button>
         </div>
     </div>
 
     <div class="col-12 button-group-container mb-3">
-        <button class="mr-3" *ngFor="let filter of allEvents" mat-raised-button class="filter-btn"
+        <button class="mr-3" *ngFor="let filter of eventFilters" mat-raised-button class="filter-btn"
             [color]="selectedEvent === filter ? 'primary' : ''" (click)="toggleEventFilter(filter)">
             {{ filter.name }}
         </button>

@@ -7,6 +7,9 @@ import { TicketsService } from './tickets.service';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TicketDetailsPopUp } from './ticket.details.popup/ticket.details.popup';
 import { QrScannerComponent } from './qrscanner-popup/qrscanner.component';
+import * as XLSX from 'xlsx';
+import * as FileSaver from 'file-saver';
+
 
 @Component({
   selector: 'app-tickets',
@@ -21,6 +24,7 @@ export class TicketsComponent implements OnInit {
   selectedEvent;
   allEvents;
   eventFilters = [];
+  displayedData;
 
   constructor(private ticketsService: TicketsService, public dialog: MatDialog) {
 
@@ -37,12 +41,13 @@ export class TicketsComponent implements OnInit {
   }
 
   getEventFilter() {
+    this.eventFilters = [{ name: "All", _id: "all" }];
     this.ticketsService.getAllActiveEvents().subscribe((res) => {
       this.allEvents = res;
       console.log(this.allEvents);
-      // this.allEvents.forEach(event => {
-      // this.eventFilters.push(event.name);
-      // })
+      this.allEvents.forEach(event => {
+        this.eventFilters.push(event);
+      })
     }, (error) => {
       console.log("Error in fetching Events. Error: ", error);
     })
@@ -70,6 +75,7 @@ export class TicketsComponent implements OnInit {
   }
 
   populateTable(data) {
+    this.displayedData = data;
     this.dataSource = new MatTableDataSource(data)
   }
 
@@ -97,6 +103,26 @@ export class TicketsComponent implements OnInit {
       this.filterValue = result;
       this.dataSource.filter = result.trim().toLowerCase();
     });
+  }
+
+  exportData() {
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.displayedData);
+    const workbook: XLSX.WorkBook = {
+      Sheets: { 'data': worksheet },
+      SheetNames: ['data']
+    };
+    const excelBuffer: any = XLSX.write(workbook, {
+      bookType: 'xlsx',
+      type: 'array'
+    });
+    this.saveAsExcelFile(excelBuffer, this.selectedEvent.name);
+  }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], {
+      type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8'
+    });
+    FileSaver.saveAs(data, `${fileName}_export_${new Date().getTime()}.xlsx`);
   }
 
 }

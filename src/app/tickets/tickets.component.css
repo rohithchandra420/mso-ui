@@ -1,4 +1,8 @@
 /* Structure */
+.btn {
+  width: 100%;
+}
+
 .table-container {
   overflow: scroll;
 }

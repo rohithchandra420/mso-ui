@@ -16,6 +16,8 @@ import { environment } from 'src/environments/environment.development';
 
 import html2canvas from 'html2canvas';
 
+declare let gtag: Function;
+
 export class NgxQrCode {
   text: string;
 }
@@ -32,7 +34,7 @@ export class ShopComponent implements OnInit {
   @ViewChild('ticketCard') downloadContent: ElementRef<HTMLElement>;
   @ViewChild('canvas') canvas: ElementRef;
   @ViewChild('downloadLink') downloadLink: ElementRef;
-  
+
   productList: Product[] = [];
   order_id: string;
   ticket: Ticket;
@@ -48,7 +50,7 @@ export class ShopComponent implements OnInit {
   filters = [];
   selectedFilter;
   loading = false;
-  
+
 
   checkOutForm: FormGroup;
   paymentForm: FormGroup;
@@ -56,7 +58,7 @@ export class ShopComponent implements OnInit {
 
   stepperOrientation: Observable<StepperOrientation>;
 
-  constructor(private router: Router, private zone: NgZone, private shopService: ShopService, 
+  constructor(private router: Router, private zone: NgZone, private shopService: ShopService,
     breakpointObserver: BreakpointObserver, private winRef: WindowRefService) {
     this.stepperOrientation = breakpointObserver
       .observe('(min-width: 800px)')
@@ -142,6 +144,13 @@ export class ShopComponent implements OnInit {
   }
 
   createRazorpayOrder() {
+    gtag('event', 'begin_checkout', {
+      currency: 'INR',
+      event: this.selectedFilter,
+      quantity: this.ticket.shopCart.length,
+      value: this.totalAmount
+    });
+
     this.isCaptured = false;
     this.loading = true;
     const txnData = {
@@ -186,12 +195,26 @@ export class ShopComponent implements OnInit {
         "name": txnData.name,
         "email": txnData.email,
         "contact": txnData.phone
-      }
+      },
     };
 
     options.handler = ((response, error) => {
       //options.response = response;
       this.zone.run(() => {
+        // GA Event: Purchase
+        gtag('event', 'purchase', {
+          transaction_id: response.razorpay_payment_id,
+          value: this.ticket.amount,
+          currency: 'INR',
+          items: [
+            {
+              item_name: this.selectedFilter,
+              quantity: this.ticket.shopCart.length,
+              price: this.ticket.amount
+            }
+          ]
+        });
+
         txnData.successData = response;
         txnData.shopCart = this.ticket.shopCart;
         this.isCaptured = true;
