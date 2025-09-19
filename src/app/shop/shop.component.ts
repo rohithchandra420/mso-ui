@@ -103,7 +103,10 @@ export class ShopComponent implements OnInit {
 
   loadProducts() {
     this.shopService.getProductList().subscribe(res => {
-      this.productList = res;
+      const sortedProducts = res.sort((a, b) => {
+        return (a.active === b.active) ? 0 : a.active ? -1 : 1;
+      });
+      this.productList = sortedProducts;      
       this.getFilter();
     });
   }
