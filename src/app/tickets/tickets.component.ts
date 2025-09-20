@@ -57,7 +57,12 @@ export class TicketsComponent implements OnInit {
   toggleEventFilter(filter) {
     this.selectedEvent = filter; // Set the selected filter
     console.log("this.selectedEvent : ", this.selectedEvent);
-    this.ticketsService.getTicketsByEventId(this.selectedEvent._id)
+    this.getTicketsByEventId(this.selectedEvent._id);
+    
+  }
+
+  getTicketsByEventId(eventId) {
+    this.ticketsService.getTicketsByEventId(eventId)
       .subscribe((res) => {
         this.populateTable(res)
       }, error => {
@@ -87,7 +92,7 @@ export class TicketsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed', result);
-      this.getAllTickets();
+      this.getTicketsByEventId(this.selectedEvent._id);
     });
   }
 
@@ -106,7 +111,30 @@ export class TicketsComponent implements OnInit {
   }
 
   exportData() {
-    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.displayedData);
+    const dataForExport: any[] = [];
+
+    this.displayedData.forEach(order => {
+      order.shopCart.forEach((item: any) => {
+        dataForExport.push({
+          _id: order._id,
+          name: order.name.trim(),
+          phone: order.phone,
+          email: order.email,
+          orderId: order.orderId,
+          paymentId: order.paymentId,
+          amount: order.amount,
+          'item name': item.name.trim(),
+          'item price': item.price,
+          status: order.status,
+          createdAt: order.createdAt,
+          updatedAt: order.updatedAt,
+          __v: order.__v
+        });
+      });
+    });
+
+    console.log(dataForExport);
+    const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(dataForExport);
     const workbook: XLSX.WorkBook = {
       Sheets: { 'data': worksheet },
       SheetNames: ['data']
